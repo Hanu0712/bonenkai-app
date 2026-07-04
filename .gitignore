@@ -1,0 +1,4 @@
+.vercel/
+.claude/
+server.mjs
+assets/hero_original.jpg
