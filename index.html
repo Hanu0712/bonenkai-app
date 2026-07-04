@@ -976,10 +976,56 @@
     padding:8px;
     box-shadow:var(--shadow);
   }
+  .voice-video-wrap{
+    position:relative;
+    background:#1c1917;
+  }
   .voice-stage video{
     width:100%; display:block;
     aspect-ratio:9/12; object-fit:cover;
     background:#1c1917;
+  }
+  .voice-play{
+    position:absolute;
+    inset:0;
+    margin:auto;
+    width:104px;
+    height:104px;
+    border-radius:50%;
+    border:1px solid rgba(255,238,190,0.66);
+    background:
+      radial-gradient(circle at 35% 28%, rgba(255,255,255,0.42), transparent 34%),
+      linear-gradient(135deg, rgba(180,0,16,0.92), rgba(126,0,9,0.96));
+    color:#fffaf1;
+    font-family:var(--f-jp-display);
+    font-size:15px;
+    letter-spacing:0.12em;
+    box-shadow:0 18px 42px rgba(76,0,10,0.34);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+  }
+  .voice-play::before{
+    content:'';
+    width:0;
+    height:0;
+    border-top:13px solid transparent;
+    border-bottom:13px solid transparent;
+    border-left:20px solid #fffaf1;
+    margin-left:6px;
+  }
+  .voice-play span{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:20px;
+    font-size:11px;
+    letter-spacing:0.08em;
+  }
+  .voice-play.hide{
+    display:none;
   }
   .voice-meta{
     display:flex; justify-content:space-between; align-items:center;
@@ -2728,10 +2774,13 @@
       <p class="lede" style="margin:8px auto 0;">お一人の動画が終わると<br>次の方の動画が自動で流れます</p>
 
       <div class="voice-stage" id="voice-stage" style="display:none;">
-        <video id="voice-video" playsinline controls muted autoplay></video>
+        <div class="voice-video-wrap">
+          <video id="voice-video" playsinline webkit-playsinline controls preload="metadata" controlsList="nodownload"></video>
+          <button type="button" class="voice-play" id="voice-play" aria-label="動画を再生"><span>再生</span></button>
+        </div>
         <div class="voice-meta">
           <span class="voice-now" id="voice-count">1 / 1</span>
-          <span class="voice-note">タップで音声オン</span>
+          <span class="voice-note" id="voice-note">タップで再生</span>
         </div>
       </div>
       <div id="voice-empty" class="gallery-empty">まだ動画はありません<br>当日のひと言をぜひアップしてください</div>
@@ -3084,26 +3133,68 @@
   const voiceEmpty = document.getElementById('voice-empty');
   const voiceVideo = document.getElementById('voice-video');
   const voiceCount = document.getElementById('voice-count');
+  const voicePlay = document.getElementById('voice-play');
+  const voiceNote = document.getElementById('voice-note');
   let playlist = [];       // [{url}]
   let playIndex = 0;
+  let voiceUserStarted = false;
 
-  function playCurrent(){
+  function setVoiceStatus(text){
+    if(voiceNote) voiceNote.textContent = text;
+  }
+
+  function playCurrent(autoPlay){
     if(!playlist.length) return;
     voiceStage.style.display = 'block';
     voiceEmpty.style.display = 'none';
     voiceVideo.src = playlist[playIndex].url;
+    voiceVideo.setAttribute('playsinline', '');
+    voiceVideo.setAttribute('webkit-playsinline', '');
+    voiceVideo.preload = 'metadata';
     voiceCount.textContent = (playIndex+1) + ' / ' + playlist.length;
-    voiceVideo.play().catch(()=>{});
+    voiceVideo.load();
+    if(voicePlay) voicePlay.classList.remove('hide');
+    setVoiceStatus('タップで再生');
+    if(autoPlay && voiceUserStarted){
+      voiceVideo.muted = false;
+      voiceVideo.play()
+        .then(()=>{ if(voicePlay) voicePlay.classList.add('hide'); setVoiceStatus('再生中'); })
+        .catch(()=>{ if(voicePlay) voicePlay.classList.remove('hide'); setVoiceStatus('タップで再生'); });
+    }
   }
   voiceVideo.addEventListener('ended', ()=>{
     playIndex = (playIndex + 1) % playlist.length;   // 終わったら次の人へ
-    playCurrent();
+    playCurrent(true);
   });
-  voiceVideo.addEventListener('click', ()=>{ voiceVideo.muted = false; });
+  voiceVideo.addEventListener('play', ()=>{
+    if(voicePlay) voicePlay.classList.add('hide');
+    setVoiceStatus('再生中');
+  });
+  voiceVideo.addEventListener('pause', ()=>{
+    if(!voiceVideo.ended && voicePlay) voicePlay.classList.remove('hide');
+    if(!voiceVideo.ended) setVoiceStatus('タップで再生');
+  });
+  voiceVideo.addEventListener('error', ()=>{
+    if(voicePlay) voicePlay.classList.remove('hide');
+    setVoiceStatus('動画を読み込めませんでした');
+  });
+  function startVoice(){
+    if(!playlist.length) return;
+    voiceUserStarted = true;
+    voiceVideo.muted = false;
+    voiceVideo.play()
+      .then(()=>{ if(voicePlay) voicePlay.classList.add('hide'); setVoiceStatus('再生中'); })
+      .catch(()=>{
+        if(voicePlay) voicePlay.classList.remove('hide');
+        setVoiceStatus('もう一度タップしてください');
+      });
+  }
+  if(voicePlay) voicePlay.addEventListener('click', startVoice);
+  voiceVideo.addEventListener('click', startVoice);
 
   function addVoice(url){
     playlist.push({url});
-    if(playlist.length === 1){ playIndex = 0; playCurrent(); }
+    if(playlist.length === 1){ playIndex = 0; playCurrent(false); }
     else{ voiceCount.textContent = (playIndex+1) + ' / ' + playlist.length; }
   }
 
@@ -3161,7 +3252,7 @@
       setTimeout(()=>{ addPhotoBtn.textContent = '＋ 写真・動画を追加する'; addPhotoBtn.disabled = false; }, 2200);
     }catch(err){
       console.error('media upload failed', err);
-      alert('アップロードに失敗しました。通信環境をご確認のうえ、もう一度お試しください。');
+      alert('アップロードに失敗しました 通信環境をご確認のうえ もう一度お試しください');
       addPhotoBtn.textContent = '＋ 写真・動画を追加する';
       addPhotoBtn.disabled = false;
     }
