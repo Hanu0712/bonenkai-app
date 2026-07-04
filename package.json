@@ -1,0 +1,8 @@
+{
+  "name": "bonenkai-app",
+  "private": true,
+  "dependencies": {
+    "@vercel/blob": "^1.1.1",
+    "resend": "^4.0.1"
+  }
+}

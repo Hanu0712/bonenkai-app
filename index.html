@@ -3026,15 +3026,23 @@
     submitBtn.disabled=true; submitBtn.textContent='送信中…';
 
     const record={ attending:true, name, kana, email, tel, insta, ts:Date.now() };
+    let saved=false;
     try{
-      if(window.storage){
-        await window.storage.set('signup:'+Date.now()+':'+Math.random().toString(36).slice(2,7), JSON.stringify(record), true);
-      } else {
+      const r = await fetch('/api/signup', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({name, kana, email, tel, insta})
+      });
+      if(r.ok) saved=true;
+    }catch(err){ console.error('signup api failed', err); }
+    if(!saved){
+      // 予備：通信できない場合はこの端末に控えを残す
+      try{
         const list = JSON.parse(localStorage.getItem('bonenkai-signups')||'[]');
         list.push(record);
         localStorage.setItem('bonenkai-signups', JSON.stringify(list));
-      }
-    }catch(err){ console.error('signup storage failed', err); }
+      }catch(e){}
+    }
 
     signupForm.style.display='none';
     thanksPanel.style.display='flex';
@@ -3063,41 +3071,11 @@
     }
   });
 
-  // ---------- gallery : photos & videos, stored in IndexedDB ----------
-  // (large-capacity local store; swaps to shared cloud storage on deploy)
+  // ---------- gallery : photos & videos, shared with everyone via cloud ----------
   const galleryGrid = document.getElementById('gallery-grid');
   const galleryEmpty = document.getElementById('gallery-empty');
   const photoInput = document.getElementById('photo-input');
   const addPhotoBtn = document.getElementById('add-photo-btn');
-
-  const mediaDB = {
-    db:null,
-    open(){
-      if(this.db) return Promise.resolve();
-      return new Promise((res,rej)=>{
-        const rq = indexedDB.open('bonenkai-media', 1);
-        rq.onupgradeneeded = ()=> rq.result.createObjectStore('media', {keyPath:'k'});
-        rq.onsuccess = ()=>{ this.db = rq.result; res(); };
-        rq.onerror = ()=> rej(rq.error);
-      });
-    },
-    put(item){
-      return new Promise((res,rej)=>{
-        const tx = this.db.transaction('media','readwrite');
-        tx.objectStore('media').put(item);
-        tx.oncomplete = res;
-        tx.onerror = ()=> rej(tx.error);
-      });
-    },
-    all(){
-      return new Promise((res,rej)=>{
-        const tx = this.db.transaction('media');
-        const rq = tx.objectStore('media').getAll();
-        rq.onsuccess = ()=> res(rq.result || []);
-        rq.onerror = ()=> rej(rq.error);
-      });
-    }
-  };
 
   addPhotoBtn.addEventListener('click', ()=> photoInput.click());
 
@@ -3150,28 +3128,42 @@
     marqueeTrack.style.animationDuration = dur + 's';
   }
 
+  const VIDEO_EXT = /\.(mp4|mov|webm|m4v|avi|3gp)(\?|$)/i;
   function addMedia(item){
-    const url = URL.createObjectURL(item.blob);
-    if((item.type||'').startsWith('video/')) addVoice(url);
+    const url = item.url || (item.blob ? URL.createObjectURL(item.blob) : '');
+    if(!url) return;
+    const isVideo = (item.type||'').startsWith('video/') || VIDEO_EXT.test(item.pathname || url);
+    if(isVideo) addVoice(url);
     else { photoUrls.push(url); rebuildMarquee(); }
   }
 
   photoInput.addEventListener('change', async function(){
     const files = Array.from(this.files || []);
     if(!files.length) return;
+    addPhotoBtn.disabled = true;
     try{
-      await mediaDB.open();
+      const { upload } = await import('https://esm.sh/@vercel/blob@1.1.1/client');
+      let done = 0;
       for(const file of files){
-        const item = {
-          k:'m:'+Date.now()+':'+Math.random().toString(36).slice(2,7),
-          type:file.type, blob:file, ts:Date.now()
-        };
-        await mediaDB.put(item);
-        addMedia(item);
+        addPhotoBtn.textContent = 'アップロード中… ' + (done+1) + ' / ' + files.length;
+        const safeName = (file.name || 'media').replace(/[^\w.\-]/g, '_');
+        const result = await upload('media/' + Date.now() + '-' + safeName, file, {
+          access: 'public',
+          handleUploadUrl: '/api/media-upload',
+          onUploadProgress: (p)=>{
+            addPhotoBtn.textContent = 'アップロード中… ' + (done+1) + ' / ' + files.length + '（' + Math.round(p.percentage) + '%）';
+          }
+        });
+        addMedia({ url: result.url, type: file.type });
+        done++;
       }
+      addPhotoBtn.textContent = '✓ アップロードしました';
+      setTimeout(()=>{ addPhotoBtn.textContent = '＋ 写真・動画を追加する'; addPhotoBtn.disabled = false; }, 2200);
     }catch(err){
-      console.error('media save failed', err);
-      alert('保存に失敗しました もう一度お試しください');
+      console.error('media upload failed', err);
+      alert('アップロードに失敗しました。通信環境をご確認のうえ、もう一度お試しください。');
+      addPhotoBtn.textContent = '＋ 写真・動画を追加する';
+      addPhotoBtn.disabled = false;
     }
     photoInput.value = '';
   });
@@ -3183,13 +3175,15 @@
   async function loadGallery(){
     SEED_PHOTOS.forEach(u=>photoUrls.push(u));
     if(photoUrls.length) rebuildMarquee();
-    SEED_VIDEOS.forEach(addVoice);
+    SEED_VIDEOS.forEach(u=>addVoice(u));
     try{
-      await mediaDB.open();
-      const items = await mediaDB.all();
-      items.sort((a,b)=>a.ts-b.ts).forEach(addMedia);
+      const r = await fetch('/api/media-list');
+      if(r.ok){
+        const data = await r.json();
+        (data.items||[]).forEach(addMedia);
+      }
     }catch(err){
-      console.error('gallery load failed', err);
+      console.error('shared gallery load failed', err);
     }
     if(!photoUrls.length) galleryEmpty.style.display = 'block';
     if(!playlist.length) voiceEmpty.style.display = 'block';
