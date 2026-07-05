@@ -1,5 +1,15 @@
-// 申込を保存し、自動返信メール（設定済みの場合）を送る
+// 申込を保存し、スプレッドシートに転送、自動返信メール（設定済みの場合）を送る
 import { put } from '@vercel/blob';
+
+// Googleフォーム受け口（スプレッドシート「望年会2026 申込者リスト」に直結）
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScKKtAipp61-NZAI7DJw1Cu1_ohmojNdnHNGDJ1jd0yzABRlw/formResponse';
+const FORM_ENTRIES = {
+  name: 'entry.2040682742',
+  kana: 'entry.1324035653',
+  email: 'entry.1692374138',
+  tel: 'entry.103747740',
+  insta: 'entry.78520541',
+};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
@@ -23,6 +33,25 @@ export default async function handler(req, res) {
     contentType: 'application/json',
     addRandomSuffix: true,
   });
+
+  // スプレッドシートへ転送（申込順リストに1行追加される）
+  let sheeted = false;
+  try {
+    const params = new URLSearchParams();
+    params.set(FORM_ENTRIES.name, rec.name);
+    params.set(FORM_ENTRIES.kana, rec.kana);
+    params.set(FORM_ENTRIES.email, rec.email);
+    params.set(FORM_ENTRIES.tel, rec.tel);
+    if (rec.insta) params.set(FORM_ENTRIES.insta, rec.insta);
+    const r = await fetch(FORM_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    });
+    sheeted = r.ok;
+  } catch (e) {
+    console.error('sheet forward failed', e);
+  }
 
   // 自動返信メール（RESEND_API_KEY が設定されたら有効になる）
   let mailed = false;
@@ -61,5 +90,5 @@ Today Japan`,
     }
   }
 
-  return res.status(200).json({ ok: true, mailed });
+  return res.status(200).json({ ok: true, mailed, sheeted });
 }
