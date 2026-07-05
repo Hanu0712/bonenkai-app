@@ -9,17 +9,19 @@ const FORM_ENTRIES = {
   email: 'entry.1692374138',
   tel: 'entry.103747740',
   insta: 'entry.78520541',
+  tier: 'entry.2056991175',
 };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { name, kana, email, tel, insta } = req.body || {};
-  if (!name || !kana || !email || !tel) {
+  const { name, kana, email, tel, insta, tier } = req.body || {};
+  if (!name || !kana || !email || !tel || !tier) {
     return res.status(400).json({ error: 'missing fields' });
   }
 
   const rec = {
+    tier: String(tier).slice(0, 50),
     name: String(name).slice(0, 100),
     kana: String(kana).slice(0, 100),
     email: String(email).slice(0, 200),
@@ -43,6 +45,7 @@ export default async function handler(req, res) {
     params.set(FORM_ENTRIES.email, rec.email);
     params.set(FORM_ENTRIES.tel, rec.tel);
     if (rec.insta) params.set(FORM_ENTRIES.insta, rec.insta);
+    params.set(FORM_ENTRIES.tier, rec.tier);
     const r = await fetch(FORM_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
