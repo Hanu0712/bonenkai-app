@@ -719,6 +719,13 @@
     cursor:pointer;
     transition:all 220ms;
   }
+  /* 申込ボタン2本（VIP/一般）: ラベルが長いので1行に収める */
+  .submit-btn.tier-submit{
+    font-size:14px;
+    letter-spacing:0.05em;
+    white-space:nowrap;
+  }
+
   .choice-btn:hover{border-color:var(--gold); color:var(--ink);}
   .choice-btn.selected{
     background:linear-gradient(135deg, #cfae67 0%, #b18b45 55%, #9c7c3c 100%);
@@ -726,13 +733,6 @@
     color:#fffdf7;
     font-weight:700;
     box-shadow:0 6px 16px rgba(156,124,60,0.24);
-  }
-  .choice-sub{
-    display:block;
-    margin-top:6px;
-    font-size:12px;
-    letter-spacing:0.14em;
-    opacity:0.75;
   }
 
   .submit-btn{
@@ -2673,13 +2673,6 @@
 
       <form class="signup" id="signup-form">
         <div class="fld">
-          <label class="field-label">ご参加区分<span class="req">必須</span></label>
-          <div class="rsvp-choice" id="tier-choice">
-            <button type="button" class="choice-btn" data-tier="VIP（20,000円）">VIP<span class="choice-sub">20,000円</span></button>
-            <button type="button" class="choice-btn" data-tier="一般（10,000円）">一般<span class="choice-sub">10,000円</span></button>
-          </div>
-        </div>
-        <div class="fld">
           <label class="field-label">お名前（漢字）<span class="req">必須</span></label>
           <input class="field-input" id="s-name" type="text" placeholder="山田 花子">
         </div>
@@ -2701,9 +2694,13 @@
         </div>
 
         <div class="error-msg" id="signup-error"></div>
-        <button type="submit" class="submit-btn" id="signup-submit">
-          申し込む
-          <span class="en">SUBMIT</span>
+        <button type="submit" class="submit-btn tier-submit" data-tier="VIP（20,000円）">
+          VIP会費 20,000円に申し込む
+          <span class="en">VIP</span>
+        </button>
+        <button type="submit" class="submit-btn tier-submit" data-tier="一般（10,000円）">
+          一般会費 10,000円に申し込む
+          <span class="en">GENERAL</span>
         </button>
       </form>
 
@@ -3082,15 +3079,11 @@
   const signupError = document.getElementById('signup-error');
   const goBtn = document.getElementById('go-btn');
 
-  // ご参加区分（VIP / 一般）の選択バー
+  // 申込ボタン2本（VIP / 一般）— 押したボタンでご参加区分が決まる
   let selectedTier = '';
-  const tierButtons = document.querySelectorAll('#tier-choice .choice-btn');
-  tierButtons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      tierButtons.forEach(b=>b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedTier = btn.dataset.tier;
-    });
+  const tierSubmitButtons = document.querySelectorAll('#signup-form .tier-submit');
+  tierSubmitButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{ selectedTier = btn.dataset.tier; });
   });
 
   signupForm.addEventListener('submit', async function(e){
@@ -3108,8 +3101,10 @@
     if(!tel){ signupError.textContent='電話番号をご入力ください'; return; }
     signupError.textContent='';
 
-    const submitBtn=document.getElementById('signup-submit');
-    submitBtn.disabled=true; submitBtn.textContent='送信中…';
+    tierSubmitButtons.forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.tier===selectedTier) b.textContent='送信中…';
+    });
 
     const record={ attending:true, tier:selectedTier, name, kana, email, tel, insta, ts:Date.now() };
     let saved=false;
