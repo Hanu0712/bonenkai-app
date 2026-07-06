@@ -84,7 +84,7 @@ export default async function handler(req, res) {
 アートグレイス ポートサイドヴィラにて
 お会いできますことを心より楽しみにしております。
 
-今日を生きる、日本は生きる
+今日を生きる　日本は生きる
 Today Japan`,
       });
       mailed = true;
