@@ -716,6 +716,10 @@
   .rsvp-choice{
     display:flex; gap:12px;
   }
+  .name-pair{
+    display:flex; gap:10px;
+  }
+  .name-pair .field-input{ flex:1; min-width:0; }
   .choice-btn{
     flex:1;
     padding:16px 10px;
@@ -2683,7 +2687,10 @@
       <form class="signup" id="signup-form">
         <div class="fld">
           <label class="field-label">お名前（漢字）<span class="req">必須</span></label>
-          <input class="field-input" id="s-name" type="text" placeholder="山田 花子">
+          <div class="name-pair">
+            <input class="field-input" id="s-sei" type="text" placeholder="名字（山田）">
+            <input class="field-input" id="s-mei" type="text" placeholder="名前（花子）">
+          </div>
         </div>
         <div class="fld">
           <label class="field-label">よみがな（ひらがな）<span class="req">必須</span></label>
@@ -3097,14 +3104,16 @@
 
   signupForm.addEventListener('submit', async function(e){
     e.preventDefault();
-    const name=document.getElementById('s-name').value.trim();
+    const sei=document.getElementById('s-sei').value.trim();
+    const mei=document.getElementById('s-mei').value.trim();
+    const name=(sei+' '+mei).trim();
     const kana=document.getElementById('s-kana').value.trim();
     const email=document.getElementById('s-email').value.trim();
     const tel=document.getElementById('s-tel').value.trim();
     const insta=document.getElementById('s-insta').value.trim();
 
     if(!selectedTier){ signupError.textContent='ご参加区分をお選びください'; return; }
-    if(!name){ signupError.textContent='お名前（漢字）をご入力ください'; return; }
+    if(!sei || !mei){ signupError.textContent='お名前（名字と名前）をご入力ください'; return; }
     if(!kana){ signupError.textContent='よみがな（ひらがな）をご入力ください'; return; }
     if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ signupError.textContent='メールアドレスを正しくご入力ください'; return; }
     if(!tel){ signupError.textContent='電話番号をご入力ください'; return; }
