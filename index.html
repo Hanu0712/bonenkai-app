@@ -2538,6 +2538,23 @@
 
   a{color:inherit;}
   ::selection{background:var(--shu); color:#fffaf1;}
+
+  /* ---- concept (むすぶレッドカーペット) ---- */
+  .reveal-title .reveal-sub.concept-sub{
+    font-family:var(--f-jp-display); font-weight:600;
+    font-size:15px; letter-spacing:0.22em; text-transform:none;
+    padding:8px 14px 8px calc(14px + 0.22em);
+  }
+  .concept-title{ line-height:1.6; letter-spacing:0.18em; padding-left:0.18em; }
+  .concept-text{
+    font-family:var(--f-jp-body);
+    font-size:16px; line-height:2.2; letter-spacing:0.12em;
+    color:var(--ink); margin:26px auto 0; text-align:center;
+  }
+  @media (max-width:480px){
+    .reveal-title .reveal-sub.concept-sub{ font-size:14px; letter-spacing:0.2em; }
+    .concept-text{ font-size:15px; }
+  }
 </style>
 </head>
 <body>
@@ -2598,7 +2615,7 @@
       <h1 class="reveal-title">
         <span class="script-eyebrow">Save the Date</span>
         2026年 望年会
-        <span class="reveal-sub">Cannes Red Carpet Party</span>
+        <span class="reveal-sub concept-sub">むすぶレッドカーペット</span>
       </h1>
       <figure class="reveal-photo">
         <img src="assets/hero.jpg" alt="望年会 レッドカーペット">
@@ -2616,6 +2633,14 @@
           <div class="cd-cell"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit">Seconds</span></div>
         </div>
       </div>
+      <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
+    </div>
+
+    <!-- ============ PAGE 1.5 : CONCEPT ============ -->
+    <div class="info-page concept-page">
+      <p class="script-eyebrow">Concept</p>
+      <div class="info-jp-title concept-title">むすぶ<br>レッドカーペット</div>
+      <p class="concept-text">2026年に<br>ありがとうを伝えて<br>2027年の自分の一歩を<br>言葉にする望年会</p>
       <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
     </div>
 
