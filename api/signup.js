@@ -81,7 +81,7 @@ export default async function handler(req, res) {
 　https://yoshiko2026.vercel.app
 
 2026年12月18日（金）、
-アニヴェルセル みなとみらい横浜にて
+アニヴェルセル 表参道にて
 お会いできますことを心より楽しみにしております。
 
 今日を生きる　日本は生きる
