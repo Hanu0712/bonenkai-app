@@ -2609,6 +2609,34 @@
     .cd-unit{ font-size:10.5px; }
     .thanks-body{ font-size:15.5px; }
   }
+  /* ---- readability pass 2: darker, heavier, larger; solid card behind text ---- */
+  .concept-page::before, .message-page::before, .stage-page::before{
+    background:rgba(255,251,244,0.9);
+  }
+  .concept-page::after, .message-page::after, .stage-page::after{ opacity:0.05; }
+  .concept-text, .message-text, .concept-note, .concept-list li, .stage-chips li, .stage-note{
+    color:var(--ink); font-weight:500;
+  }
+  .message-text{ line-height:2; letter-spacing:0.08em; }
+  .message-photo{
+    margin:2px auto 4px; width:min(62%, 240px);
+    padding:6px; border:1px solid var(--gold-line);
+    border-radius:999px 999px 10px 10px;
+    background:rgba(255,250,241,0.9);
+    box-shadow:0 14px 34px rgba(86,47,27,0.12);
+  }
+  .message-photo img{
+    display:block; width:100%; aspect-ratio:3/4; object-fit:cover; object-position:50% 30%;
+    border-radius:999px 999px 6px 6px;
+  }
+  @media (max-width:480px){
+    .concept-text, .message-text{ font-size:18px; }
+    .concept-text.stage-text{ font-size:17px; }
+    .concept-list li, .concept-note{ font-size:16.5px; }
+    .stage-chips li{ font-size:15.5px; }
+    .stage-note{ font-size:14px; line-height:1.85; }
+    .message-sign{ font-size:18px; }
+  }
 </style>
 </head>
 <body>
@@ -2700,7 +2728,7 @@
         <li>プロのシンガーによる生ライブ</li>
         <li>レッドカーペット体験</li>
       </ul>
-      <p class="concept-note">見るだけのパーティーではなく<br>参加者みんなで<br>会場をつくる一夜に</p>
+      <p class="concept-note">見るだけのパーティーではなく<br>参加するみんなで<br>会場をつくる一夜です</p>
       <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
     </div>
 
@@ -2708,9 +2736,11 @@
     <div class="info-page message-page">
       <p class="script-eyebrow">Message</p>
       <div class="info-jp-title">ご挨拶</div>
-      <p class="message-text">カンヌで歩いた<br>レッドカーペットを<br>今度は東京・表参道で<br>皆さんと歩きたいと<br>思いました</p>
+      <figure class="message-photo"><img src="assets/yoshiko_portrait.jpg" alt="主催 増田美子"></figure>
+      <p class="message-text">カンヌで歩いた<br>レッドカーペットを<br>今度は東京・表参道で<br>皆さんと一緒に<br>歩きたいと思いました</p>
       <p class="message-text">2026年にありがとうを伝え<br>2027年の自分の一歩を<br>言葉にする</p>
-      <p class="message-text">この夜を<br>参加する皆さんと<br>一緒につくっていきます</p>
+      <p class="message-text">そんな一夜を<br>参加してくださる皆さんと<br>一緒につくっていきます</p>
+      <p class="message-text">会場でお会いできることを<br>心より楽しみにしております</p>
       <p class="message-sign"><span class="message-sign-label">主催</span>増田 美子</p>
       <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
     </div>
@@ -2720,13 +2750,13 @@
       <p class="script-eyebrow">Musubu Stage</p>
       <div class="info-jp-title">先行申込特典</div>
       <p class="stage-lead">「むすぶステージ」<br>参加優先権</p>
-      <p class="concept-text stage-text">先行申込の方には<br>会場のステージで表現できる<br>「むすぶステージ」への<br>参加優先権をご用意します</p>
+      <p class="concept-text stage-text">先行申込の方には<br>会場のステージで<br>ご自身を表現できる<br>「むすぶステージ」への<br>参加優先権をご用意します</p>
       <ul class="stage-chips">
         <li>ピアノ演奏</li><li>歌</li><li>ダンス</li><li>朗読</li><li>詩</li>
         <li>2027年の一歩の発表</li><li>小さなパフォーマンス</li>
       </ul>
-      <p class="concept-text stage-text">会場にはピアノがあります<br>あなたの中にあるものを<br>みんなと分かち合って<br>みませんか？</p>
-      <p class="stage-note">※出演を確約するものではありません<br>出演内容・時間・人数は<br>事前のご相談と<br>全体進行の調整により決定いたします</p>
+      <p class="concept-text stage-text">会場にはピアノもあります<br>あなたの中にあるものを<br>みんなと分かち合って<br>みませんか？</p>
+      <p class="stage-note">※出演をお約束するものではありません<br>内容・時間・人数は<br>事前にご相談のうえ<br>全体の進行にあわせて<br>決定いたします</p>
       <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
     </div>
 
