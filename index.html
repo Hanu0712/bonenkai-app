@@ -2637,6 +2637,154 @@
     .stage-note{ font-size:14px; line-height:1.85; }
     .message-sign{ font-size:18px; }
   }
+  /* =====================================================================
+     EDITORIAL LAYER (2026-10 brush-up)
+     カード＋和柄の重ね表現をやめ、アイボリー無地×余白×大きな欧文見出しへ。
+     和柄は封筒とヒーローだけに残す。赤はUIに使わない（金と墨のみ）。
+     ===================================================================== */
+  #view-invite{ counter-reset:sec; background:#f7f2ea; }
+  .ambient-bg{ background:#f7f2ea !important; }
+  .ambient-bg::after, .wagara-layer::before{ display:none !important; }
+
+  #view-invite .info-page{
+    min-height:auto;
+    max-width:560px;
+    padding:96px 32px 88px !important;
+    gap:0;
+    align-items:center;
+    background:transparent;
+  }
+  #view-invite .info-page::before{
+    content:''; display:block; position:absolute; inset:auto;
+    top:0; left:50%; width:1px; height:56px; transform:translateX(-50%);
+    background:linear-gradient(180deg, transparent, rgba(160,125,60,0.55)) !important;
+    border:0 !important; border-radius:0 !important; box-shadow:none !important;
+  }
+  #view-invite .info-page::after{ display:none !important; }
+  #view-invite .info-page .reveal-scroll{ display:none; }
+
+  /* headings : 番号＋大きな欧文イタリック＋小さな和文 */
+  #view-invite .info-page > .script-eyebrow{
+    counter-increment:sec;
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400;
+    font-size:46px; line-height:1.05; letter-spacing:0.01em;
+    color:#1f1b18 !important; margin:0;
+  }
+  #view-invite .info-page > .script-eyebrow::before{
+    content:counter(sec, decimal-leading-zero);
+    display:block; margin:0 auto 14px;
+    font-family:'Cormorant Garamond', serif; font-style:normal;
+    font-size:13px; letter-spacing:0.32em; color:#a07d3c; font-variant-numeric:lining-nums;
+  }
+  #view-invite .info-page > .info-jp-title{
+    font-family:var(--f-jp-display); font-weight:500;
+    font-size:13px !important; letter-spacing:0.42em; padding-left:0.42em;
+    color:#8a6a33 !important; margin:14px 0 40px;
+  }
+  #view-invite .info-page > .info-jp-title.concept-title{
+    font-size:27px !important; line-height:1.65; letter-spacing:0.2em; padding-left:0.2em;
+    color:#1f1b18 !important; font-weight:600; margin:22px 0 30px;
+  }
+
+  /* body copy */
+  #view-invite .concept-text, #view-invite .message-text{
+    font-family:var(--f-jp-body); font-weight:500;
+    font-size:16.5px !important; line-height:2.15; letter-spacing:0.1em;
+    color:#24201c !important; margin:0 0 26px;
+  }
+  #view-invite .concept-text.stage-text{ font-size:16px !important; }
+  #view-invite .concept-list{
+    width:100%; max-width:300px; margin:8px auto 30px;
+  }
+  #view-invite .concept-list li{
+    font-size:15.5px !important; font-weight:500; color:#24201c !important;
+    padding:15px 0; border-color:rgba(31,27,24,0.14) !important;
+  }
+  #view-invite .concept-note{
+    font-size:15px !important; color:#5a5048 !important; font-weight:400; line-height:2.1;
+  }
+
+  /* message : 写真を大きく、枠飾りを外す */
+  #view-invite .message-photo{
+    width:min(78%, 300px); padding:0; border:0; background:none; box-shadow:none;
+    margin:0 auto 40px;
+  }
+  #view-invite .message-photo img{ border-radius:999px 999px 0 0; }
+  #view-invite .message-sign{ margin-top:8px; font-size:17px !important; color:#1f1b18; }
+  #view-invite .message-sign-label{ color:#a07d3c; }
+
+  /* stage */
+  #view-invite .stage-lead{
+    font-size:19px !important; color:#1f1b18; margin:0 0 30px; letter-spacing:0.16em;
+  }
+  #view-invite .stage-chips{
+    display:block; max-width:330px; margin:6px auto 34px; padding:18px 0;
+    border-top:1px solid rgba(31,27,24,0.14); border-bottom:1px solid rgba(31,27,24,0.14);
+    line-height:2.3; text-align:center;
+  }
+  #view-invite .stage-chips li{
+    display:block; border:0 !important; border-radius:0 !important; background:none !important; padding:0 !important;
+    font-size:15px !important; font-weight:500; color:#24201c !important; letter-spacing:0.06em;
+  }
+  #view-invite .stage-chips li span + span::before{ content:'／'; color:#a07d3c; margin:0 0.45em; font-weight:400; }
+  #view-invite .date-lockup .dl-date{ font-variant-numeric:lining-nums; }
+  #view-invite .stage-note{ font-size:12.5px !important; color:#6b6058 !important; font-weight:400; margin-top:6px; }
+
+  /* information : カードをやめて罫線の一覧に */
+  #view-invite .date-lockup{ margin:0 0 34px; }
+  #view-invite .date-lockup .dl-date{
+    font-family:'Cormorant Garamond', serif; font-weight:400; font-style:normal;
+    font-size:52px; letter-spacing:0.02em; color:#1f1b18 !important;
+  }
+  #view-invite .date-lockup .dl-date-day{ font-style:italic; font-size:22px; color:#a07d3c !important; margin-left:8px; }
+  #view-invite .info-blocks{
+    width:100%; max-width:340px; background:none !important; border:0 !important;
+    box-shadow:none !important; border-radius:0 !important; padding:0 !important;
+    border-top:1px solid rgba(31,27,24,0.16) !important;
+  }
+  #view-invite .info-blocks::before, #view-invite .info-blocks::after{ display:none !important; }
+  #view-invite .ib{
+    background:none !important; border:0 !important; border-radius:0 !important; box-shadow:none !important;
+    border-bottom:1px solid rgba(31,27,24,0.16) !important;
+    padding:22px 0 !important;
+  }
+  #view-invite .ib-label{
+    font-family:'Cormorant Garamond', serif; font-size:12px !important;
+    letter-spacing:0.36em; color:#a07d3c !important; font-weight:500;
+  }
+  #view-invite .ib-value, #view-invite .venue-name, #view-invite .venue-address,
+  #view-invite .aligned-label, #view-invite .aligned-amount, #view-invite .aligned-main, #view-invite .aligned-prefix{
+    color:#1f1b18 !important;
+  }
+  #view-invite .deadline-note{ color:#5a5048 !important; font-size:13.5px !important; }
+
+  /* access */
+  #view-invite .access-map{ border-radius:0 !important; box-shadow:none !important; border:0 !important; padding:0 !important; background:none !important; }
+  #view-invite .access-map iframe{ border-radius:0 !important; filter:grayscale(0.85) contrast(1.02); }
+  #view-invite .access-address{ color:#24201c !important; font-size:15px !important; line-height:2; margin-top:22px; }
+  #view-invite .access-tel{ color:#1f1b18 !important; }
+  #view-invite .map-btn{
+    background:transparent !important; color:#1f1b18 !important;
+    border:1px solid #1f1b18 !important; border-radius:0 !important; box-shadow:none !important;
+    font-size:13px; letter-spacing:0.24em; margin-top:26px;
+  }
+  #view-invite .map-pin{ display:none; }
+
+  /* rsvp : 下線だけの入力欄、赤い必須バッジをやめる */
+  #view-invite .field-label{ color:#1f1b18 !important; font-weight:500; }
+  #view-invite .req{
+    background:none !important; color:#a07d3c !important; border:0 !important;
+    padding:0 !important; margin-left:8px; font-size:11px !important; letter-spacing:0.12em;
+  }
+  #view-invite .field-input{
+    background:transparent !important; border:0 !important; border-radius:0 !important;
+    border-bottom:1px solid rgba(31,27,24,0.3) !important; box-shadow:none !important;
+    padding-left:2px !important; color:#1f1b18;
+  }
+  #view-invite .field-input:focus{ border-bottom-color:#a07d3c !important; outline:none; }
+  #view-invite .signup, #view-invite .signup::before, #view-invite .signup::after{
+    background:none !important; box-shadow:none !important; border:0 !important;
+  }
 </style>
 </head>
 <body>
@@ -2752,8 +2900,9 @@
       <p class="stage-lead">「むすぶステージ」<br>参加優先権</p>
       <p class="concept-text stage-text">先行申込の方には<br>会場のステージで<br>ご自身を表現できる<br>「むすぶステージ」への<br>参加優先権をご用意します</p>
       <ul class="stage-chips">
-        <li>ピアノ演奏</li><li>歌</li><li>ダンス</li><li>朗読</li><li>詩</li>
-        <li>2027年の一歩の発表</li><li>小さなパフォーマンス</li>
+        <li><span>ピアノ演奏</span><span>歌</span><span>ダンス</span></li>
+        <li><span>朗読</span><span>詩</span><span>小さなパフォーマンス</span></li>
+        <li><span>2027年の一歩の発表</span></li>
       </ul>
       <p class="concept-text stage-text">会場にはピアノもあります<br>あなたの中にあるものを<br>みんなと分かち合って<br>みませんか？</p>
       <p class="stage-note">※出演をお約束するものではありません<br>内容・時間・人数は<br>事前にご相談のうえ<br>全体の進行にあわせて<br>決定いたします</p>
