@@ -2551,6 +2551,40 @@
     font-size:16px; line-height:2.2; letter-spacing:0.12em;
     color:var(--ink); margin:26px auto 0; text-align:center;
   }
+  .concept-page, .message-page, .stage-page{
+    padding-top:calc(12vh + env(safe-area-inset-top));
+    padding-bottom:calc(10vh + env(safe-area-inset-bottom));
+  }
+  .concept-list{
+    list-style:none; padding:0; margin:4px auto 0;
+    font-family:var(--f-jp-body); font-size:14.5px; letter-spacing:0.1em; color:var(--ink-2);
+  }
+  .concept-list li{ padding:9px 0; border-bottom:1px solid var(--gold-line); }
+  .concept-list li:first-child{ border-top:1px solid var(--gold-line); }
+  .concept-note, .message-text, .stage-note{
+    font-family:var(--f-jp-body); color:var(--ink-2); text-align:center; margin:0;
+  }
+  .concept-note{ font-size:14px; line-height:2; letter-spacing:0.1em; }
+  .message-text{ font-size:15px; line-height:2.1; letter-spacing:0.1em; color:var(--ink); }
+  .message-sign{
+    font-family:var(--f-jp-display); font-size:16px; letter-spacing:0.24em; color:var(--ink); margin:6px 0 0;
+  }
+  .message-sign-label{ font-size:11px; letter-spacing:0.2em; color:var(--gold-2); margin-right:1.2em; }
+  .stage-lead{
+    font-family:var(--f-jp-display); font-weight:600; font-size:18px; line-height:1.7;
+    letter-spacing:0.14em; color:var(--ink); margin:0;
+  }
+  .concept-text.stage-text{ margin-top:0; font-size:14.5px; line-height:2.05; }
+  .stage-chips{
+    list-style:none; padding:0; margin:0 auto; max-width:330px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
+  }
+  .stage-chips li{
+    font-family:var(--f-jp-body); font-size:13px; letter-spacing:0.08em; color:var(--ink);
+    padding:6px 13px; border:1px solid var(--gold-line); border-radius:999px;
+    background:rgba(255,250,241,0.6);
+  }
+  .stage-note{ font-size:11.5px; line-height:1.9; letter-spacing:0.06em; color:var(--ink-2); opacity:0.85; }
   @media (max-width:480px){
     .reveal-title .reveal-sub.concept-sub{ font-size:14px; letter-spacing:0.2em; }
     .concept-text{ font-size:15px; }
@@ -2640,7 +2674,39 @@
     <div class="info-page concept-page">
       <p class="script-eyebrow">Concept</p>
       <div class="info-jp-title concept-title">むすぶ<br>レッドカーペット</div>
-      <p class="concept-text">2026年に<br>ありがとうを伝えて<br>2027年の自分の一歩を<br>言葉にする望年会</p>
+      <p class="concept-text">2026年に<br>ありがとうを伝え<br>2027年への一歩を<br>言葉にする望年会</p>
+      <ul class="concept-list">
+        <li>お食事と交流</li>
+        <li>プロのシンガーによる生ライブ</li>
+        <li>レッドカーペット体験</li>
+      </ul>
+      <p class="concept-note">見るだけのパーティーではなく<br>参加者みんなで<br>会場をつくる一夜に</p>
+      <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
+    </div>
+
+    <!-- ============ PAGE 1.6 : MESSAGE ============ -->
+    <div class="info-page message-page">
+      <p class="script-eyebrow">Message</p>
+      <div class="info-jp-title">ご挨拶</div>
+      <p class="message-text">カンヌで歩いた<br>レッドカーペットを<br>今度は東京・表参道で<br>皆さんと歩きたいと<br>思いました</p>
+      <p class="message-text">2026年にありがとうを伝え<br>2027年の自分の一歩を<br>言葉にする</p>
+      <p class="message-text">この夜を<br>参加する皆さんと<br>一緒につくっていきます</p>
+      <p class="message-sign"><span class="message-sign-label">主催</span>増田 美子</p>
+      <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
+    </div>
+
+    <!-- ============ PAGE 1.7 : MUSUBU STAGE (先行申込特典) ============ -->
+    <div class="info-page stage-page">
+      <p class="script-eyebrow">Musubu Stage</p>
+      <div class="info-jp-title">先行申込特典</div>
+      <p class="stage-lead">「むすぶステージ」<br>参加優先権</p>
+      <p class="concept-text stage-text">先行申込の方には<br>会場のステージで表現できる<br>「むすぶステージ」への<br>参加優先権をご用意します</p>
+      <ul class="stage-chips">
+        <li>ピアノ演奏</li><li>歌</li><li>ダンス</li><li>朗読</li><li>詩</li>
+        <li>2027年の一歩の発表</li><li>小さなパフォーマンス</li>
+      </ul>
+      <p class="concept-text stage-text">会場にはピアノがあります<br>あなたの中にあるものを<br>みんなと分かち合って<br>みませんか？</p>
+      <p class="stage-note">※出演を確約するものではありません<br>出演内容・時間・人数は<br>事前のご相談と<br>全体進行の調整により決定いたします</p>
       <div class="reveal-scroll"><span>SCROLL</span><span class="bar"></span></div>
     </div>
 
