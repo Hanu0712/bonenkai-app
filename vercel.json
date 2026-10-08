@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/(general|vip-gift|vip-lunch|special-vip)", "destination": "/index.html" }
+  ]
+}

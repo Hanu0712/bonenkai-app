@@ -2785,6 +2785,81 @@
   #view-invite .signup, #view-invite .signup::before, #view-invite .signup::after{
     background:none !important; box-shadow:none !important; border:0 !important;
   }
+  /* ---- 美子さんLPと揃える要素：小さな英字ラベル（ゴシック）＋申込部分のワイン色の帯 ---- */
+  #view-invite .info-page > .script-eyebrow::before{
+    font-family:'Zen Kaku Gothic New', sans-serif; font-size:11px; letter-spacing:0.34em; font-weight:500;
+  }
+  .hero-course{
+    display:block; margin:12px auto 0;
+    font-family:'Zen Kaku Gothic New', sans-serif; font-size:11px; font-weight:500;
+    letter-spacing:0.34em; color:#a07d3c; font-style:normal;
+  }
+  .hero-course[hidden]{ display:none; }
+
+  #view-invite #rsvp-page{
+    max-width:none; width:100%;
+    background:#34101a;
+    padding:104px 32px 96px !important;
+  }
+  #view-invite #rsvp-page > *{ max-width:420px; width:100%; margin-left:auto; margin-right:auto; }
+  #view-invite #rsvp-page::before{ background:linear-gradient(180deg, transparent, rgba(233,196,106,0.7)) !important; }
+  #view-invite #rsvp-page > .script-eyebrow{ color:#f6eee2 !important; }
+  #view-invite #rsvp-page > .script-eyebrow::before{ color:#e2bf72; }
+  #view-invite #rsvp-page > .info-jp-title{ color:#e2bf72 !important; }
+  #view-invite #rsvp-page .deadline-note{ color:rgba(246,238,226,0.78) !important; margin-bottom:36px; }
+
+  .course-kicker{
+    font-family:'Zen Kaku Gothic New', sans-serif; font-size:11px; font-weight:500;
+    letter-spacing:0.34em; text-transform:uppercase; color:#e2bf72; margin:0 0 14px;
+  }
+  .course-card{
+    text-align:center; padding:28px 20px 26px; margin:0 auto 40px;
+    border-top:2px solid #e2bf72; border-bottom:1px solid rgba(226,191,114,0.35);
+  }
+  .course-card[hidden], .course-picker[hidden]{ display:none; }
+  .course-code{
+    font-family:'Zen Kaku Gothic New', sans-serif; font-size:13px; font-weight:700;
+    letter-spacing:0.3em; color:#f6eee2; margin:0;
+  }
+  .course-price{
+    font-family:'Cormorant Garamond', serif; font-variant-numeric:lining-nums;
+    font-size:46px; line-height:1.2; color:#f6eee2; margin:6px 0 14px; letter-spacing:0.02em;
+  }
+  .course-perks{ margin:0; font-family:var(--f-jp-body); font-size:14px; line-height:2; color:rgba(246,238,226,0.86); }
+  .course-perks span{ display:block; }
+  .signup[hidden]{ display:none !important; }
+  #fee-value:has(.fee-course){ display:block !important; width:100%; padding:0 !important; margin:0 auto; }
+  .fee-course{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .fee-code{ font-family:'Zen Kaku Gothic New', sans-serif; font-weight:700; font-size:12px; letter-spacing:0.3em; color:#1f1b18; }
+  .fee-price{ font-family:'Cormorant Garamond', serif; font-variant-numeric:lining-nums; font-size:30px; color:#1f1b18; }
+
+  .course-picker{ text-align:center; }
+  .course-picker-lead{ font-family:var(--f-jp-body); font-size:15px; color:#f6eee2; margin:0 0 22px; }
+  .course-links{ border-top:1px solid rgba(226,191,114,0.35); }
+  .course-link{
+    display:flex; align-items:baseline; gap:12px; padding:18px 4px;
+    border-bottom:1px solid rgba(226,191,114,0.35); text-decoration:none; color:#f6eee2;
+  }
+  .cl-code{ font-family:'Zen Kaku Gothic New', sans-serif; font-weight:700; font-size:13px; letter-spacing:0.24em; }
+  .cl-price{ margin-left:auto; font-family:'Cormorant Garamond', serif; font-size:24px; font-variant-numeric:lining-nums; }
+  .cl-arrow{ color:#e2bf72; }
+
+  /* 濃い帯の上のフォーム */
+  #view-invite #rsvp-page .field-label{ color:#f6eee2 !important; }
+  #view-invite #rsvp-page .req{ color:#e2bf72 !important; }
+  #view-invite #rsvp-page .field-input{
+    color:#f6eee2 !important; border-bottom-color:rgba(246,238,226,0.38) !important;
+  }
+  #view-invite #rsvp-page .field-input::placeholder{ color:rgba(246,238,226,0.4); }
+  #view-invite #rsvp-page .field-input:focus{ border-bottom-color:#e2bf72 !important; }
+  #view-invite #rsvp-page .error-msg{ color:#f2c4a0; }
+  #view-invite #rsvp-page .submit-btn{
+    background:#e2bf72 !important; color:#34101a !important; border:0 !important;
+    border-radius:999px !important; box-shadow:none !important; font-weight:600; letter-spacing:0.12em;
+  }
+  #view-invite #rsvp-page .submit-btn .en{ color:#34101a !important; opacity:0.7; }
+  #view-invite #rsvp-page .thanks, #view-invite #rsvp-page .thanks *{ color:#f6eee2 !important; }
+  #view-invite #rsvp-page .thanks .script-eyebrow{ color:#e2bf72 !important; }
 </style>
 </head>
 <body>
@@ -2846,6 +2921,7 @@
         <span class="script-eyebrow">Save the Date</span>
         2026年 望年会
         <span class="reveal-sub concept-sub">むすぶレッドカーペット</span>
+        <span class="hero-course" id="hero-course" hidden></span>
       </h1>
       <figure class="reveal-photo">
         <img src="assets/hero.jpg" alt="望年会 レッドカーペット">
@@ -2926,7 +3002,7 @@
         </div>
         <div class="ib">
           <span class="ib-label">会費</span>
-          <span class="ib-value aligned-info">
+          <span class="ib-value aligned-info" id="fee-value">
             <span class="aligned-row"><span class="aligned-label">VIP</span><span class="aligned-amount">20,000円</span></span>
             <span class="aligned-row"><span class="aligned-label">一 般</span><span class="aligned-amount">10,000円</span></span>
           </span>
@@ -2976,6 +3052,20 @@
             <span class="deadline-line">お願い申し上げます</span>
       </p>
 
+      <!-- コース別URL（/general 等）で開いたときの申込コース表示 -->
+      <div class="course-card" id="course-card" hidden>
+        <p class="course-kicker">Your Entry</p>
+        <p class="course-code" id="course-code"></p>
+        <p class="course-price" id="course-price"></p>
+        <p class="course-perks" id="course-perks"></p>
+      </div>
+      <!-- コース指定なしで開いたとき：コースを選んでもらう -->
+      <div class="course-picker" id="course-picker" hidden>
+        <p class="course-kicker">Tickets</p>
+        <p class="course-picker-lead">お申込みのコースをお選びください</p>
+        <div class="course-links" id="course-links"></div>
+      </div>
+
       <form class="signup" id="signup-form">
         <div class="fld">
           <label class="field-label">お名前（漢字）<span class="req">必須</span></label>
@@ -3005,13 +3095,9 @@
         </div>
 
         <div class="error-msg" id="signup-error"></div>
-        <button type="submit" class="submit-btn tier-submit" data-tier="VIP（20,000円）">
-          VIP会費 20,000円に申し込む
-          <span class="en">VIP</span>
-        </button>
-        <button type="submit" class="submit-btn tier-submit" data-tier="一般（10,000円）">
-          一般会費 10,000円に申し込む
-          <span class="en">GENERAL</span>
+        <button type="submit" class="submit-btn tier-submit" id="course-submit" data-tier="">
+          <span id="course-submit-label">申し込む</span>
+          <span class="en" id="course-submit-en"></span>
         </button>
       </form>
 
@@ -3387,13 +3473,50 @@
     tick(); setInterval(tick,1000);
   })();
 
+  // ---------- コース別URL：/general /vip-gift /vip-lunch /special-vip（?course= でも可）----------
+  // 1つのURL＝1つのコース。申込の取り違えを防ぐため、コース指定のないページではフォームを出さない
+  const COURSES = {
+    'general':     { code:'GENERAL',     price:15000, perks:['お食事・ドリンク','生ライブ','レッドカーペット','交流タイム'] },
+    'vip-gift':    { code:'VIP GIFT',    price:30000, perks:['VIP席','優先案内','Today Japan限定ギフト','メッセージカード'] },
+    'vip-lunch':   { code:'VIP LUNCH',   price:30000, perks:['VIP席','美子さんとの限定ランチ','食卓の美しい所作','2027年の一歩'] },
+    'special-vip': { code:'SPECIAL VIP', price:50000, perks:['少人数対話','企画の共創','2027年の対象企画へ1回参加'] },
+  };
+  const yen = n => n.toLocaleString('ja-JP') + '円';
+  const courseSlug = (new URLSearchParams(location.search).get('course')
+    || location.pathname.replace(/\/+$/,'').split('/').pop() || '').toLowerCase();
+  const COURSE = COURSES[courseSlug] || null;
+  (function applyCourse(){
+    const fee = document.getElementById('fee-value');
+    const row = (label, amount) => '<span class="aligned-row"><span class="aligned-label">'+label+'</span><span class="aligned-amount">'+amount+'</span></span>';
+    if(COURSE){
+      fee.innerHTML = '<span class="fee-course"><span class="fee-code">'+COURSE.code+'</span><span class="fee-price">'+yen(COURSE.price)+'</span></span>';
+      const hc = document.getElementById('hero-course');
+      hc.textContent = COURSE.code + ' ENTRY'; hc.hidden = false;
+      document.getElementById('course-code').textContent = COURSE.code;
+      document.getElementById('course-price').textContent = yen(COURSE.price);
+      document.getElementById('course-perks').innerHTML = COURSE.perks.map(p=>'<span>'+p+'</span>').join('');
+      document.getElementById('course-card').hidden = false;
+      const btn = document.getElementById('course-submit');
+      btn.dataset.tier = COURSE.code + '（' + yen(COURSE.price) + '）';
+      document.getElementById('course-submit-label').textContent = COURSE.code + '　' + yen(COURSE.price) + 'で申し込む';
+      document.getElementById('course-submit-en').textContent = 'Apply';
+      document.title = '2026年 望年会 お申込み｜' + COURSE.code;
+    } else {
+      fee.innerHTML = Object.values(COURSES).map(c=>row(c.code, yen(c.price))).join('');
+      document.getElementById('signup-form').hidden = true;
+      document.getElementById('course-links').innerHTML = Object.entries(COURSES).map(([slug,c])=>
+        '<a class="course-link" href="/'+slug+'"><span class="cl-code">'+c.code+'</span><span class="cl-price">'+yen(c.price)+'</span><span class="cl-arrow">→</span></a>').join('');
+      document.getElementById('course-picker').hidden = false;
+    }
+  })();
+
   // ---------- ⑤ RSVP form → completion → NEXT ----------
   const signupForm = document.getElementById('signup-form');
   const thanksPanel = document.getElementById('thanks-panel');
   const signupError = document.getElementById('signup-error');
   const goBtn = document.getElementById('go-btn');
 
-  // 申込ボタン2本（VIP / 一般）— 押したボタンでご参加区分が決まる
+  // 申込ボタンはコースごとに1本（data-tier はコース設定から入る）
   let selectedTier = '';
   const tierSubmitButtons = document.querySelectorAll('#signup-form .tier-submit');
   tierSubmitButtons.forEach(btn=>{
@@ -3412,7 +3535,7 @@
     const tel=document.getElementById('s-tel').value.trim();
     const insta=document.getElementById('s-insta').value.trim();
 
-    if(!selectedTier){ signupError.textContent='ご参加区分をお選びください'; return; }
+    if(!selectedTier){ signupError.textContent='お申込みのコースが確認できません。案内ページのリンクから開き直してください'; return; }
     if(!sei || !mei){ signupError.textContent='お名前（名字と名前）をご入力ください'; return; }
     if(!kanaSei || !kanaMei){ signupError.textContent='よみがな（名字と名前）をご入力ください'; return; }
     if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ signupError.textContent='メールアドレスを正しくご入力ください'; return; }
