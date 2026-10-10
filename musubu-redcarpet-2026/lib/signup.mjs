@@ -1,11 +1,6 @@
 // Keep the completed original registration service and its spreadsheet integration.
 const SIGNUP_URL = "https://yoshiko2026.vercel.app/api/signup";
-export const COURSES = Object.freeze({
-  "GENERAL（15,000円）": 15000,
-  "VIP GIFT（30,000円）": 30000,
-  "VIP LUNCH（30,000円）": 30000,
-  "SPECIAL VIP（50,000円）": 50000,
-});
+export const COURSES = Object.freeze({"VIP LUNCH（30,000円）": 30000});
 
 function json(data, status = 200) {
   return Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
