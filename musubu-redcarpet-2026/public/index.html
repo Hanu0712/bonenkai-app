@@ -2764,6 +2764,18 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
  .ed-details .ed-button{display:block;width:100%;text-align:center}
  .ticket-capacity{font-size:15px}
 }
+</style><style id="registration-redcarpet">
+.telephone-parts{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) auto minmax(0,1.2fr);gap:8px;align-items:center}
+.telephone-parts .field-input{min-width:0;width:100%;text-align:center;border:1px solid #bca898;padding:14px 6px;font-size:16px}
+@media(max-width:380px){.telephone-parts{gap:4px}}
+
+.redcarpet-field{border:0;padding:0;margin-inline:0;min-width:0}
+.redcarpet-field legend{padding:0;margin-bottom:12px}
+.redcarpet-options{display:grid;gap:10px}
+.redcarpet-options label{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border:1px solid #d8cabc;cursor:pointer;font-size:16px}
+.redcarpet-options input{width:20px;height:20px;flex-shrink:0;accent-color:#811b2b}
+.redcarpet-options label:focus-within{outline:2px solid #811b2b;outline-offset:2px}
+#tel-format-hint{font-size:13px;margin-top:8px;line-height:1.6}
 </style></head>
 <body><div id="ed-intro-screen" aria-hidden="true"><img id="ed-intro-logo" fetchpriority="high" src="assets/lp-76eb4063ea7cb7.png" alt="Today Japan"></div><script>
 (function(){
@@ -2937,9 +2949,24 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
           <p class="field-hint" id="email-delivery-hint">ご案内メールをお届けするため、できるだけiCloud以外のメールアドレスをご入力ください。</p>
         </div>
         <div class="fld">
-          <label class="field-label" for="s-tel">電話番号<span class="req">必須</span></label>
-          <input class="field-input" id="s-tel" maxlength="40" required aria-label="電話番号" autocomplete="tel" type="tel" inputmode="tel" placeholder="090-1234-5678">
+          <label class="field-label" for="s-tel-first">電話番号<span class="req">必須</span></label>
+          <div class="telephone-parts" role="group" aria-label="電話番号">
+            <input class="field-input" id="s-tel-first" required aria-label="電話番号の最初の部分" autocomplete="tel-area-code" type="tel" inputmode="numeric" pattern="[0-9]{2,5}" maxlength="5" placeholder="090">
+            <span aria-hidden="true">－</span>
+            <input class="field-input" id="s-tel-middle" required aria-label="電話番号の中央の部分" autocomplete="tel-local-prefix" type="tel" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" placeholder="1234">
+            <span aria-hidden="true">－</span>
+            <input class="field-input" id="s-tel-last" required aria-label="電話番号の最後の部分" autocomplete="tel-local-suffix" type="tel" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="5678">
+          </div>
+        <p class="field-hint" id="tel-format-hint">3つの枠に分けて数字をご入力ください。固定電話も入力できます。</p>
         </div>
+        <fieldset class="fld redcarpet-field">
+          <legend class="field-label">レッドカーペット<span class="req">必須</span></legend>
+          <div class="redcarpet-options">
+            <label><input type="radio" name="redCarpet" value="歩きたい" required>歩きたい</label>
+            <label><input type="radio" name="redCarpet" value="歩きたくない" required>歩きたくない</label>
+            <label><input type="radio" name="redCarpet" value="悩み中" required>悩み中</label>
+          </div>
+        </fieldset>
         <div class="fld">
           <label class="field-label" for="s-insta">Instagram アカウント名</label>
           <input class="field-input" id="s-insta" maxlength="100" aria-label="Instagram アカウント名" autocomplete="off" type="text" placeholder="@today_japan">
@@ -2950,7 +2977,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
       </form>
       <section id="confirmation-panel" class="confirmation-panel" hidden aria-labelledby="application-screen-title">
         <p class="confirmation-lead">内容をご確認のうえ、お申込みください。</p>
-        <dl class="application-summary" id="confirmation-summary"><div><dt>参加コース</dt><dd data-confirm="tier"></dd></div><div><dt>お名前</dt><dd data-confirm="name"></dd></div><div><dt>よみがな</dt><dd data-confirm="kana"></dd></div><div><dt>メールアドレス</dt><dd data-confirm="email"></dd></div><div><dt>電話番号</dt><dd data-confirm="tel"></dd></div><div><dt>Instagram</dt><dd data-confirm="insta"></dd></div></dl>
+        <dl class="application-summary" id="confirmation-summary"><div><dt>参加コース</dt><dd data-confirm="tier"></dd></div><div><dt>お名前</dt><dd data-confirm="name"></dd></div><div><dt>よみがな</dt><dd data-confirm="kana"></dd></div><div><dt>メールアドレス</dt><dd data-confirm="email"></dd></div><div><dt>電話番号</dt><dd data-confirm="tel"></dd></div><div><dt>レッドカーペット</dt><dd data-confirm="redCarpet"></dd></div><div><dt>Instagram</dt><dd data-confirm="insta"></dd></div></dl>
         
         <p id="confirmation-error" class="error-msg" role="alert"></p>
         <button class="application-action" type="button" id="confirm-submit">SPECIAL VIPに申し込む</button>
@@ -3347,13 +3374,15 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
   signupForm.addEventListener('submit',function(e){
     e.preventDefault();
     if(submitting||registrationComplete||registrationUncertain)return;
+    if(!signupForm.reportValidity())return;
     const sei=field('s-sei'),mei=field('s-mei'),kanaSei=field('s-kana-sei'),kanaMei=field('s-kana-mei');
-    const record={tier:courseInput.value,name:(sei+' '+mei).trim(),kana:(kanaSei+' '+kanaMei).trim(),email:field('s-email'),tel:field('s-tel'),insta:field('s-insta')};
+    const record={tier:courseInput.value,name:(sei+' '+mei).trim(),kana:(kanaSei+' '+kanaMei).trim(),email:field('s-email'),tel:['s-tel-first','s-tel-middle','s-tel-last'].map(field).join('-'),redCarpet:signupForm.querySelector('input[name="redCarpet"]:checked')?.value||'',insta:field('s-insta')};
     if(!record.tier){signupError.textContent='ご参加コースをお選びください';return;}
     if(!sei||!mei){signupError.textContent='お名前（名字と名前）をご入力ください';return;}
     if(!kanaSei||!kanaMei){signupError.textContent='よみがな（名字と名前）をご入力ください';return;}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(record.email)){signupError.textContent='メールアドレスを正しくご入力ください';return;}
-    if(!record.tel){signupError.textContent='電話番号をご入力ください';return;}
+    if(!/^0[0-9]{9,10}$/.test(record.tel.replaceAll('-',''))){signupError.textContent='電話番号を10桁または11桁の数字でご入力ください';return;}
+    if(!['歩きたい','歩きたくない','悩み中'].includes(record.redCarpet)){signupError.textContent='レッドカーペットについてお選びください';return;}
     signupError.textContent='';confirmError.textContent='';pendingRecord={...record};
     document.querySelectorAll('[data-confirm]').forEach(el=>{el.textContent=record[el.dataset.confirm]||'未入力';});
     confirmButton.textContent=record.tier.split('（')[0]+'に申し込む';
