@@ -1,0 +1,64 @@
+:root{--red:#8d1024;--wine:#340e16;--green:#173c32;--gold:#c9a665;--cream:#fffaf2;--ink:#241c1d}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.8}h1,h2,h3,p{margin-top:0}h1,h2{font-family:Georgia,"Hiragino Mincho ProN",serif;line-height:1.25}h1{font-size:clamp(3rem,6vw,5.5rem);color:#fff;margin:.25rem 0 1rem}h1 em{color:#edc56d;font-style:normal}.hero{min-height:760px;background:var(--wine);display:grid;grid-template-columns:42% 58%;align-items:stretch;position:relative;overflow:hidden}.hero::after{content:"";grid-column:2;background:linear-gradient(90deg,var(--wine),rgba(52,14,22,.04) 20%),url('assets/hero.webp') center/cover no-repeat}.hero-copy{max-width:620px;color:#fff;align-self:center;padding:5rem 3rem 5rem 8vw;position:relative;z-index:1}.eyebrow,.kicker{letter-spacing:.16em;font-size:.75rem;font-weight:700;color:var(--gold)}.lead{font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:2rem}.cta{display:inline-flex;gap:1.2rem;align-items:center;background:var(--gold);color:#201315;text-decoration:none;padding:.9rem 1.5rem;border-radius:999px;font-weight:700}.cta span{font-size:1.4rem}.wrap{max-width:1100px;margin:auto;padding:100px 6vw}.intro{text-align:center}.intro h2,.venue h2,.early h2{font-size:clamp(2rem,4vw,3.4rem)}.intro p:last-child{max-width:700px;margin:auto}.experience{background:var(--green);color:#fff}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.cards div{border:1px solid rgba(255,255,255,.3);padding:1.3rem;min-height:150px}.cards b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.15em;margin-bottom:1rem}.cards span{display:block}.venue{display:grid;grid-template-columns:1.5fr 1fr;gap:4rem;align-items:center}.venue-box{background:var(--wine);color:#fff;padding:2.5rem;text-align:center;font-family:Georgia,serif;font-size:1.5rem}.venue-box strong{color:var(--gold);font-size:1rem}.tickets{background:#f0e7d8}.ticket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.ticket-grid article{background:#fff;padding:1.5rem;border-top:4px solid var(--red);display:flex;flex-direction:column}.ticket-grid small{color:var(--red);letter-spacing:.12em;font-weight:bold}.ticket-grid h3{font-size:2rem;margin:.4rem 0}.ticket-grid a{color:var(--red);font-weight:bold;text-decoration:none;margin-top:auto}.early{border-bottom:1px solid #dfd2bf}.early p:not(.kicker):not(.note){max-width:700px}.note,.tiny{font-size:.8rem;color:#786b65}.apply{background:var(--wine);color:#fff;text-align:center}.apply h2{font-size:clamp(2.3rem,5vw,4rem)}.light{background:#edc56d}.tiny{margin-top:1.5rem;color:#d6c6b7}footer{text-align:center;background:#1c1012;color:#fff;padding:2.5rem;font-family:Georgia,serif}footer span{font-family:inherit;font-size:.8rem;color:#c9a665}
+/* Responsive layout: preserve the desktop design and show the full artwork on phones. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px}
+.hero-visual{display:none}
+.hero-copy,.cards>div,.ticket-grid>article,.venue>div{min-width:0}
+.cta,.ticket-grid a{touch-action:manipulation}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+@media(min-width:721px) and (max-width:1100px){
+  .ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  body{font-size:16px;line-height:1.85;overflow-wrap:break-word}
+  .hero{min-height:0;display:flex;flex-direction:column;background:var(--wine)}
+  .hero::after{display:none}
+  .hero-visual{display:block;order:-1;width:100%;height:auto}
+  .hero-copy{width:100%;max-width:none;padding:32px 24px 40px;text-align:center;align-self:auto}
+  h1{font-size:clamp(27px,7.8vw,44px);line-height:1.35;margin:0 0 20px}
+  h1 em{white-space:nowrap}
+  .eyebrow{font-size:11px;letter-spacing:.14em;margin-bottom:14px}
+  .lead{font-size:clamp(16px,4.4vw,20px);line-height:1.85;margin-bottom:24px}
+  .wrap{width:100%;padding:56px 24px}
+  h2,.intro h2,.venue h2,.early h2,.apply h2{font-size:clamp(24px,6.3vw,32px);line-height:1.5;letter-spacing:0;margin-bottom:24px}
+  .kicker{font-size:11px;letter-spacing:.13em;line-height:1.9;margin-bottom:16px}
+  .intro>.kicker{max-width:30em;margin-left:auto;margin-right:auto;letter-spacing:.05em}
+  .intro p:last-child{text-align:left;line-height:2}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .cards div{padding:20px 16px;min-height:142px}
+  .cards b{font-size:11px;margin-bottom:12px;letter-spacing:.1em}
+  .cards span{font-size:14px;line-height:1.85}
+  .venue{grid-template-columns:minmax(0,1fr);gap:24px}
+  .venue p:last-child{margin-bottom:0}
+  .venue-box{padding:28px 16px;font-size:28px;line-height:1.8}
+  .venue-box strong{display:inline-block;font-size:clamp(14px,4vw,18px)}
+  .ticket-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  .ticket-grid article{padding:24px;border-top-width:3px}
+  .ticket-grid small{font-size:13px;line-height:1.6;letter-spacing:.12em}
+  .ticket-grid h3{font-size:34px;line-height:1.4;margin:12px 0 16px;font-variant-numeric:tabular-nums}
+  .ticket-grid p{font-size:15px;line-height:1.95;margin-bottom:24px}
+  .ticket-grid a{display:flex;align-items:center;justify-content:center;min-height:52px;padding:12px 10px;border:1px solid var(--red);font-size:15px;line-height:1.5;text-align:center}
+  .cta{justify-content:center;min-height:52px;width:100%;max-width:340px;padding:12px 20px;font-size:16px;line-height:1.5;gap:18px}
+  .early .note,.tiny{font-size:12px;line-height:1.9}
+  .apply p:not(.kicker){max-width:30em;margin-left:auto;margin-right:auto}
+  .apply .tiny{margin-top:24px;margin-bottom:0}
+  footer{padding:32px 20px calc(32px + env(safe-area-inset-bottom));font-size:20px}
+  footer span{display:inline-block;font-size:11px;line-height:1.8}
+}
+@media(max-width:359px){
+  .hero-copy{padding-left:20px;padding-right:20px}
+  .wrap{padding-left:20px;padding-right:20px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .cards div{min-height:0}
+  .ticket-grid article{padding:22px 20px}
+}
+
+/* Keep the full poster and readable heading on wider screens. */
+@media(min-width:721px){
+  .hero{min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:1600px;margin:auto;align-items:center}
+  .hero::after{display:none}
+  .hero-visual{display:block;grid-column:2;grid-row:1;width:100%;height:auto;max-height:980px;object-fit:contain}
+  .hero-copy{grid-column:1;grid-row:1;width:100%;max-width:none;padding:60px clamp(24px,4vw,70px)}
+  h1{font-size:clamp(36px,5vw,70px)}
+  h1 em{display:inline-block;font-size:clamp(27px,3.3vw,48px);white-space:nowrap}
+  .hero .lead{font-size:clamp(16px,1.6vw,23px)}
+}
