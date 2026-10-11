@@ -9,6 +9,9 @@ function json(data, status = 200) {
 }
 
 export async function register(request, fetchService = fetch) {
+  // Enable after the shared Google receiver and email price mapping are verified.
+  return json({ ok: false, error: "お申し込み受付の準備中です。" }, 503);
+
   if (request.method !== "POST") return json({ ok: false, error: "送信方法をご確認ください。" }, 405);
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) {
