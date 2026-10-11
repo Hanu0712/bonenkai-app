@@ -15,11 +15,14 @@ const FORM_ENTRIES = {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { name, kana, email, tel, insta, tier } = req.body || {};
+  const { name, kana, email, tel, insta, tier, redCarpet } = req.body || {};
   if (!name || !kana || !email || !tel || !tier) {
     return res.status(400).json({ error: 'missing fields' });
   }
 
+  if (redCarpet != null && !['歩きたい', '歩きたくない', '悩み中'].includes(redCarpet)) {
+    return res.status(400).json({ error: 'invalid red-carpet preference' });
+  }
   const rec = {
     tier: String(tier).slice(0, 50),
     name: String(name).slice(0, 100),
@@ -27,6 +30,7 @@ export default async function handler(req, res) {
     email: String(email).slice(0, 200),
     tel: String(tel).slice(0, 50),
     insta: String(insta || '').slice(0, 100),
+    ...(redCarpet ? { redCarpet } : {}),
     ts: Date.now(),
   };
 
