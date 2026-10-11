@@ -27,7 +27,7 @@ export async function register(request, fetchService = fetch) {
     return json({ ok: false, error: "入力内容を確認して、もう一度お試しください。" }, 400);
   }
   if (!value || typeof value !== "object" || Array.isArray(value)) return json({ ok: false, error: "入力内容をご確認ください。" }, 400);
-  const limits = { name: 100, kana: 100, email: 254, tel: 40, insta: 100, tier: 60 };
+  const limits = { name: 100, kana: 100, email: 254, tel: 40, insta: 100, tier: 60, redCarpet: 10 };
   const record = {};
   for (const [key, max] of Object.entries(limits)) {
     if (value[key] == null && key === "insta") record[key] = "";
@@ -35,6 +35,7 @@ export async function register(request, fetchService = fetch) {
       return json({ ok: false, error: "入力内容をご確認ください。" }, 400);
     } else record[key] = value[key].trim();
   }
+  if (!["歩きたい", "歩きたくない", "悩み中"].includes(record.redCarpet)) return json({ ok: false, error: "レッドカーペットについてお選びください。" }, 400);
   if (!Object.hasOwn(COURSES, record.tier)) return json({ ok: false, error: "ご参加コースをお選びください。" }, 400);
   if (!record.name || !record.kana || !record.tel || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(record.email)) {
     return json({ ok: false, error: "必須項目を正しくご入力ください。" }, 400);
