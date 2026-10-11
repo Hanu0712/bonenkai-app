@@ -10,6 +10,7 @@ const FORM_ENTRIES = {
   tel: 'entry.103747740',
   insta: 'entry.78520541',
   tier: 'entry.2056991175',
+  redCarpet: 'entry.1859529812',
 };
 
 export default async function handler(req, res) {
@@ -50,6 +51,7 @@ export default async function handler(req, res) {
     params.set(FORM_ENTRIES.tel, rec.tel);
     if (rec.insta) params.set(FORM_ENTRIES.insta, rec.insta);
     params.set(FORM_ENTRIES.tier, rec.tier);
+    if (rec.redCarpet) params.set(FORM_ENTRIES.redCarpet, rec.redCarpet);
     const r = await fetch(FORM_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
