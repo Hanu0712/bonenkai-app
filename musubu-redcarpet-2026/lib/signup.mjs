@@ -1,7 +1,7 @@
 // Keep the completed original registration service and its spreadsheet integration.
 const SIGNUP_URL = "https://yoshiko2026.vercel.app/api/signup";
 export const COURSES = Object.freeze({
-  "SPECIAL VIP（50,000円）": 50000,
+  "VIP COLLAB（50,000円）": 50000,
 });
 
 function json(data, status = 200) {
