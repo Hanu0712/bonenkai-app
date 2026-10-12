@@ -62,3 +62,9 @@ a:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
   h1 em{display:inline-block;font-size:clamp(27px,3.3vw,48px);white-space:nowrap}
   .hero .lead{font-size:clamp(16px,1.6vw,23px)}
 }
+
+
+/* Scroll reveals match the four ticket pages; content remains visible without JavaScript. */
+.guide-reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease var(--reveal-delay,0ms),transform .7s cubic-bezier(.2,.65,.3,1) var(--reveal-delay,0ms)}
+.guide-reveal.is-visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.guide-reveal{opacity:1;transform:none;transition:none}}

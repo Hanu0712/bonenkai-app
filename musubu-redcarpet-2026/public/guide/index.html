@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>むすぶレッドカーペット｜2026年12月18日</title><meta name="description" content="2026年にありがとうを。2027年へ、あなたの一歩を。表参道で開催する温かな望年会。"><link rel="stylesheet" href="style.css?v=3"></head>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>むすぶレッドカーペット｜2026年12月18日</title><meta name="description" content="2026年にありがとうを。2027年へ、あなたの一歩を。表参道で開催する温かな望年会。"><link rel="stylesheet" href="style.css?v=4"></head>
 <body>
 <header class="hero"><img class="hero-visual" src="assets/hero.webp" alt="むすぶレッドカーペット。クリスマスの会場でドレスをまとった美子。12月18日、表参道。" width="941" height="1672" fetchpriority="high" decoding="async"><div class="hero-copy"><p class="eyebrow">2026.12.18 / OMOTESANDO</p><h1>むすぶ<br><em>レッドカーペット</em></h1><p class="lead">2026年にありがとうを。<br>2027年へ、あなたの一歩を。</p><a class="cta" href="#tickets">参加方法を見る <span>→</span></a></div></header>
 <main>
@@ -10,4 +10,18 @@
 <section class="early wrap"><p class="kicker">EARLY ENTRY</p><h2>先行申込の方へ。</h2><p>会場のピアノやステージを使った「むすぶステージ」への参加希望を優先的に受け付けます。歌、ダンス、朗読、演奏、2027年の一歩の発表など、あなたの表現をみんなと分かち合えます。</p><p class="note">※出演内容・時間・人数は事前相談と全体進行の調整により決定します。</p></section>
 <section id="apply" class="apply"><div class="wrap"><p class="kicker">RESERVE YOUR SPOT</p><h2>12月18日を、<br>一緒に歩きませんか？</h2><p>ご希望のチケットを選び、詳細・お申込みへお進みください。</p><a class="cta light" href="#tickets">チケットを選ぶ <span>→</span></a><p class="tiny">アニヴェルセル 表参道｜受付 18:00・開宴 18:30</p></div></section>
 </main><footer>Today Japan<br><span>人をむすぶ・次世代をむすぶ・世界をむすぶ</span></footer>
+<script>
+(function(){
+ const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
+ if(preference.matches || !('IntersectionObserver' in window)) return;
+ const targets=document.querySelectorAll('.hero-visual,.hero-copy,.intro>*,.experience .kicker,.experience h2,.cards>div,.venue>div,.tickets .kicker,.tickets h2,.ticket-grid>article,.early>*,.apply .wrap>*,footer');
+ const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}});
+ },{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+ targets.forEach((element,index)=>{element.classList.add('guide-reveal');element.style.setProperty('--reveal-delay',(index%3)*60+'ms');observer.observe(element);});
+ const revealAll=()=>{if(preference.matches){observer.disconnect();targets.forEach(element=>element.classList.add('is-visible'));}};
+ if(preference.addEventListener)preference.addEventListener('change',revealAll);
+})();
+</script>
 </body></html>
+
