@@ -2645,7 +2645,7 @@ html{scroll-behavior:smooth}body{background:var(--ivory)!important;color:var(--i
 #rsvp-page,#rsvp-page *{box-sizing:border-box}
 #rsvp-page{background:var(--ivory)!important;color:var(--ink);padding:72px 6%!important}
 #rsvp-page [hidden]{display:none!important}
-#rsvp-page>*{opacity:1!important;transform:none!important;transition:none!important;max-width:720px}
+#rsvp-page>*:not(#confirmation-panel):not(#thanks-panel){opacity:1!important;transform:none!important;transition:none!important;max-width:720px}
 .application-brand{display:flex;align-items:center;justify-content:center;gap:14px;padding-bottom:28px;border-bottom:1px solid var(--beige);font:500 16px/1.5 var(--f-body);letter-spacing:.1em}
 .application-brand img{width:38px;height:44px;object-fit:contain;mix-blend-mode:multiply}
 .application-brand-date{display:block;font:400 11px/1.7 var(--f-body);letter-spacing:.12em;margin-top:4px}
@@ -2745,8 +2745,20 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
 .ed-suite img{width:100%;height:auto}
 @media(max-width:720px){.ed-suite{width:calc(100% + 8vw);margin-left:-4vw;margin-right:-4vw}}
 </style>
-<style>.viplunch-mobile-break{display:none}@media(max-width:720px){.viplunch-mobile-break{display:block}}</style>
-<style id="ticket-responsive-20261011">
+
+<style id="registration-redcarpet">
+.telephone-parts{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) auto minmax(0,1.2fr);gap:8px;align-items:center}
+.telephone-parts .field-input{min-width:0;width:100%;text-align:center;border:1px solid #bca898;padding:14px 6px;font-size:16px}
+@media(max-width:380px){.telephone-parts{gap:4px}}
+.redcarpet-field{border:0;padding:0;margin-inline:0;min-width:0}
+.redcarpet-field legend{padding:0;margin-bottom:12px}
+.redcarpet-options{display:grid;gap:10px}
+.redcarpet-options label{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border:1px solid #d8cabc;cursor:pointer;font-size:16px}
+.redcarpet-options input{width:20px;height:20px;flex-shrink:0;accent-color:#811b2b}
+.redcarpet-options label:focus-within{outline:2px solid #811b2b;outline-offset:2px}
+#tel-format-hint{font-size:13px;margin-top:8px;line-height:1.6}
+</style><style>.farewell-mobile-break{display:none}@media(max-width:720px){.farewell-mobile-break{display:block}}</style><style id="selected-course-style">.viplunch-mobile-break{display:none}@media(max-width:720px){.viplunch-mobile-break{display:block}}
+
 .ed-ticket{flex-wrap:wrap;align-items:baseline;gap:8px 20px}
 .ticket-capacity{font:500 16px/1.6 var(--f-body);color:var(--red);white-space:nowrap;margin-top:8px}
 .ed-details>div,.general-photo-heading>div{min-width:0}
@@ -2765,18 +2777,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
  .ed-details .ed-button{display:block;width:100%;text-align:center}
  .ticket-capacity{font-size:15px}
 }
-</style><style id="registration-redcarpet">
-.telephone-parts{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) auto minmax(0,1.2fr);gap:8px;align-items:center}
-.telephone-parts .field-input{min-width:0;width:100%;text-align:center;border:1px solid #bca898;padding:14px 6px;font-size:16px}
-@media(max-width:380px){.telephone-parts{gap:4px}}
-.redcarpet-field{border:0;padding:0;margin-inline:0;min-width:0}
-.redcarpet-field legend{padding:0;margin-bottom:12px}
-.redcarpet-options{display:grid;gap:10px}
-.redcarpet-options label{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border:1px solid #d8cabc;cursor:pointer;font-size:16px}
-.redcarpet-options input{width:20px;height:20px;flex-shrink:0;accent-color:#811b2b}
-.redcarpet-options label:focus-within{outline:2px solid #811b2b;outline-offset:2px}
-#tel-format-hint{font-size:13px;margin-top:8px;line-height:1.6}
-</style><style>.farewell-mobile-break{display:none}@media(max-width:720px){.farewell-mobile-break{display:block}}</style></head>
+</style></head>
 <body><div id="ed-intro-screen" aria-hidden="true"><img id="ed-intro-logo" fetchpriority="high" src="assets/lp-76eb4063ea7cb7.png" alt="Today Japan"></div><script>
 (function(){
  const screen=document.getElementById('ed-intro-screen');
@@ -2986,7 +2987,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
       <section class="thanks" id="thanks-panel" hidden aria-labelledby="thanks-title">
         <div class="completion-greeting"><div><p class="completion-english">THANK<br>YOU.</p><h2 class="thanks-title" id="thanks-title" tabindex="-1">お申込み<br class="mobile-only">ありがとうございました。</h2><p class="thanks-welcome">12月18日、<br>お会いできるのを<br><span style="white-space:nowrap;">楽しみにしています。</span></p><p class="thanks-signature">増田美子</p></div><img class="thanks-kiss" src="assets/lp-ad4e439c3775b4.png" alt="投げキッスでお礼を伝える美子さん" width="220" height="260"></div>
         <div class="completion-ticket"><p class="application-eyebrow">YOUR TICKET</p><p id="completion-ticket" class="completion-ticket-name">VIP <span>¥30,000</span></p><dl class="completion-event"><div><dt>日時</dt><dd>2026年12月18日（金）<br>受付 18:00 ／ 開宴 18:30</dd></div><div><dt>会場</dt><dd>アニヴェルセル 表参道<br>スイート</dd></div></dl></div>
-        <div class="completion-next"><h3>このあとのご案内</h3><ol><li><span class="completion-step-number">01</span><div><h4>お振込先をメールでご案内します</h4><p>ご入力いただいたメールアドレスへ、お振込先とお振込期限のご案内を自動でお送りします。届くまで数分ほどお待ちください。</p><p id="completion-email" class="completion-email">送信元：musuburedcarpet.secretariat@gmail.com</p></div></li><li><span class="completion-step-number">02</span><div><h4>1週間以内にお振込みください</h4><p>メールに記載のお振込期限をご確認のうえ、お手続きをお願いいたします。ご入金確認後、メールをお送りします。</p></div></li></ol><p class="completion-mail-note">ご案内は事務局の musuburedcarpet.secretariat@gmail.com からお送りします。届かない場合は迷惑メールフォルダもご確認ください。</p></div>
+        <div class="completion-next"><h3>このあとのご案内</h3><ol><li><span class="completion-step-number">01</span><div><h4>お振込先をメールでご案内します</h4><p>ご入力いただいたメールアドレスへ、お振込先とお振込期限のご案内を自動でお送りします。届くまで数分ほどお待ちください。</p><p id="completion-email" class="completion-email">送信元：musuburedcarpet.secretariat@gmail.com</p><p class="completion-delivery-note" style="font-size:14px">届かない場合は迷惑メールフォルダもご確認ください。</p></div></li><li><span class="completion-step-number">02</span><div><h4>1週間以内にお振込みください</h4><p>メールに記載のお振込期限をご確認のうえ、お手続きをお願いいたします。ご入金確認後、メールをお送りします。</p><p class="completion-refund">ご入金後、お客様のご都合によるキャンセルの場合は、原則としてご返金いたしかねます。あらかじめご了承ください。</p></div></li></ol></div>
         <a class="application-action" href="./">イベントのご案内に戻る</a>
         
       </section>
@@ -3595,6 +3596,37 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
 })();
 </script>
 
+<script id="course-content-sync">
+(function(){
+ const courses={"GENERAL（15,000円）":{"ticket":"\u003cspan>GENERAL\u003c/span>","details":"\u003cdiv>\u003cp class=\"ed-label\">YOUR TICKET\u003c/p>\u003cdiv class=\"general-photo-heading\">\u003cdiv>\u003ch2>GENERAL\u003c/h2>\u003cdiv class=\"ed-price\">¥15,000\u003c/div>\u003c/div>\u003cimg src=\"assets/lp-c9936eb8f54309.png\" alt=\"頬に手を添えて笑う美子さん\">\u003c/div>\u003ch3>この夜を、まるごと楽しむ。\u003c/h3>\u003ca class=\"ed-button\" href=\"#rsvp-page\">申し込みへ進む\u003c/a>\u003c/div>\u003cdiv>\u003cul>\u003cli>お食事・ドリンク\u003c/li>\u003cli>プロシンガーによるLIVE\u003c/li>\u003cli>レッドカーペット体験\u003c/li>\u003cli>交流タイム\u003c/li>\u003cli>GENERAL席\u003c/li>\u003c/ul>\u003cdiv class=\"ed-for\">\u003cspan class=\"ed-label\">THIS TICKET IS FOR YOU\u003c/span>\u003cp>まずはこの夜そのものを\u003cbr>思いきり楽しみたい方へ。\u003c/p>\u003c/div>\u003c/div>","price":"GENERAL　15,000円","css":""},"VIP（30,000円）":{"ticket":"\u003cspan>VIP\u003c/span>\u003cspan>限定：5名様\u003c/span>","details":"\u003cdiv>\u003cp class=\"ed-label\">YOUR TICKET\u003c/p>\u003cdiv class=\"general-photo-heading\">\u003cdiv>\u003ch2>VIP\u003c/h2>\u003cdiv class=\"ed-price\">¥30,000\u003c/div>\u003cp class=\"ticket-capacity\">限定：5名様\u003c/p>\u003c/div>\u003cimg src=\"assets/lp-c9936eb8f54309.png\" alt=\"頬に手を添えて笑う美子さん\">\u003c/div>\u003ch3>\u003cspan style=\"font-size:inherit\">美子と少人数で\u003c/span>\u003cbr>\u003cspan style=\"font-size:inherit\">特別な時間を過ごす\u003c/span>\u003c/h3>\u003ca class=\"ed-button\" href=\"#rsvp-page\">申し込みへ進む\u003c/a>\u003c/div>\u003cdiv>\u003cul>\u003cli>VIPの内容\u003c/li>\u003cli>VIP席\u003c/li>\u003cli>レッドカーペット優先案内\u003c/li>\u003cli>美子お気に入りのお店で\u003cbr class=\"viplunch-mobile-break\">少人数限定ランチ\u003c/li>\u003cli>食事をしながら美しい所作を学べる\u003c/li>\u003cli>実践名刺交換マナー\u003c/li>\u003c/ul>\u003cdiv class=\"ed-for\">\u003cspan class=\"ed-label\">THIS TICKET IS FOR YOU\u003c/span>\u003cp>\u003cspan style=\"font-size:inherit\">美子と少人数で過ごし、\u003c/span>\u003cbr>\u003cspan style=\"font-size:inherit\">2027年の一歩を語りたい方へ。\u003c/span>\u003c/p>\u003c/div>\u003c/div>","price":"VIP　30,000円・限定：5名様","css":".viplunch-mobile-break{display:none}@media(max-width:720px){.viplunch-mobile-break{display:block}}\n\n.ed-ticket{flex-wrap:wrap;align-items:baseline;gap:8px 20px}\n.ticket-capacity{font:500 16px/1.6 var(--f-body);color:var(--red);white-space:nowrap;margin-top:8px}\n.ed-details>div,.general-photo-heading>div{min-width:0}\n.ed-details .general-photo-heading h2{font-size:clamp(34px,4vw,56px);line-height:1.12;overflow-wrap:normal}\n.ticket-title-word{display:inline-block;white-space:nowrap}\n.ed-details li{line-height:1.85;overflow-wrap:anywhere}\n.completion-ticket-name{flex-wrap:wrap}\n@media(max-width:720px){\n .ed-details{grid-template-columns:minmax(0,1fr);gap:30px}\n .general-photo-heading{grid-template-columns:minmax(0,1fr) clamp(88px,26vw,112px);gap:12px}\n .general-photo-heading>img{width:100%;height:auto}\n .ed-details .general-photo-heading h2{font-size:clamp(26px,6.6vw,42px);line-height:1.18}\n .ed-details .general-photo-heading .ed-price{font-size:clamp(26px,6.7vw,38px);white-space:nowrap}\n .ed-details h3{font-size:clamp(17px,4.5vw,22px);line-height:1.85;overflow-wrap:anywhere}\n .ed-details li,.ed-for p{font-size:clamp(16px,4.2vw,20px);line-height:1.9}\n .ed-details .ed-button{display:block;width:100%;text-align:center}\n .ticket-capacity{font-size:15px}\n}\n"},"SPECIAL VIP（50,000円）":{"ticket":"\u003cspan>SPECIAL VIP\u003c/span>\u003cspan>限定：3名様\u003c/span>","details":"\u003cdiv>\u003cp class=\"ed-label\">YOUR TICKET\u003c/p>\u003cdiv class=\"general-photo-heading\">\u003cdiv>\u003ch2 class=\"vip-course-title\">\u003cspan class=\"ticket-title-word\">SPECIAL\u003c/span> \u003cspan class=\"ticket-title-word\">VIP\u003c/span>\u003c/h2>\u003cdiv class=\"ed-price\">¥50,000\u003c/div>\u003cp class=\"ticket-capacity\">限定：3名様\u003c/p>\u003c/div>\u003cimg src=\"assets/lp-c9936eb8f54309.png\" alt=\"頬に手を添えて笑う美子さん\">\u003c/div>\u003ch3>美子と2027年の特別企画を\u003cbr>一緒に生み出す\u003c/h3>\u003ca class=\"ed-button\" href=\"#rsvp-page\">申し込みへ進む\u003c/a>\u003c/div>\u003cdiv>\u003ch3>SPECIAL VIPの内容\u003c/h3>\u003cul>\u003cli>VIP席\u003c/li>\u003cli>レッドカーペット優先案内\u003c/li>\u003cli>美子との少人数セッション\u003cbr>（活動や夢の言語化）\u003c/li>\u003cli>繋がりたい参加者とのご縁を結ぶ\u003c/li>\u003cli>TodayJapanとコラボ企画\u003c/li>\u003cli>2027年の対象企画へ1回参加できる権利\u003c/li>\u003c/ul>\u003cdiv class=\"ed-for\">\u003cspan class=\"ed-label\">THIS TICKET IS FOR YOU\u003c/span>\u003cp>美子とともに2027年の特別企画を\u003cbr>一緒につくりたい方へ\u003c/p>\u003c/div>\u003c/div>","price":"SPECIAL VIP　50,000円・限定：3名様","css":".ed-details h2.vip-course-title{font-size:clamp(36px,5.2vw,64px);line-height:1.1;overflow-wrap:normal}.ed-details li{line-height:1.8;overflow-wrap:anywhere}\n.ed-details .general-photo-heading h2.vip-course-title{font-size:clamp(30px,4vw,56px);line-height:1.1;overflow-wrap:normal}.ticket-inclusion{font-size:14px;line-height:1.8;margin-top:8px}.ed-details li{line-height:1.8;overflow-wrap:anywhere}@media(max-width:720px){.ed-details .general-photo-heading h2.vip-course-title{font-size:clamp(25px,6.2vw,42px)}.completion-ticket-name{flex-wrap:wrap}.ed-details h3{font-size:clamp(18px,4.8vw,24px)}}\n\n.ed-ticket{flex-wrap:wrap;align-items:baseline;gap:8px 20px}\n.ticket-capacity{font:500 16px/1.6 var(--f-body);color:var(--red);white-space:nowrap;margin-top:8px}\n.ed-details>div,.general-photo-heading>div{min-width:0}\n.ed-details .general-photo-heading h2{font-size:clamp(34px,4vw,56px);line-height:1.12;overflow-wrap:normal}\n.ticket-title-word{display:inline-block;white-space:nowrap}\n.ed-details li{line-height:1.85;overflow-wrap:anywhere}\n.completion-ticket-name{flex-wrap:wrap}\n@media(max-width:720px){\n .ed-details{grid-template-columns:minmax(0,1fr);gap:30px}\n .general-photo-heading{grid-template-columns:minmax(0,1fr) clamp(88px,26vw,112px);gap:12px}\n .general-photo-heading>img{width:100%;height:auto}\n .ed-details .general-photo-heading h2{font-size:clamp(26px,6.6vw,42px);line-height:1.18}\n .ed-details .general-photo-heading .ed-price{font-size:clamp(26px,6.7vw,38px);white-space:nowrap}\n .ed-details h3{font-size:clamp(17px,4.5vw,22px);line-height:1.85;overflow-wrap:anywhere}\n .ed-details li,.ed-for p{font-size:clamp(16px,4.2vw,20px);line-height:1.9}\n .ed-details .ed-button{display:block;width:100%;text-align:center}\n .ticket-capacity{font-size:15px}\n}\n"},"PREMIUM VIP（100,000円）":{"ticket":"\u003cspan>PREMIUM VIP\u003c/span>\u003cspan>限定：2名様\u003c/span>","details":"\u003cdiv>\u003cp class=\"ed-label\">YOUR TICKET\u003c/p>\u003cdiv class=\"general-photo-heading\">\u003cdiv>\u003ch2 class=\"vip-course-title\">\u003cspan class=\"ticket-title-word\">PREMIUM\u003c/span> \u003cspan class=\"ticket-title-word\">VIP\u003c/span>\u003c/h2>\u003cdiv class=\"ed-price\">¥100,000\u003c/div>\u003cp class=\"ticket-capacity\">限定：2名様\u003c/p>\u003c/div>\u003cimg src=\"assets/lp-c9936eb8f54309.png\" alt=\"頬に手を添えて笑う美子さん\">\u003c/div>\u003ch3>美子とマンツーマンで学ぶ\u003cbr>エグゼクティブマナー\u003c/h3>\u003ca class=\"ed-button\" href=\"#rsvp-page\">申し込みへ進む\u003c/a>\u003c/div>\u003cdiv>\u003ch3>PREMIUM VIPの内容\u003c/h3>\u003cul>\u003cli>VIP席\u003c/li>\u003cli>レッドカーペット優先案内\u003c/li>\u003cli>美子とのマンツーマンマナーレッスン\u003cbr>（レストランor料亭でのお食事付）\u003c/li>\u003cli>ご自身の疑問や悩みに合わせたセッション\u003c/li>\u003cli>2027年の対象企画へ1回参加出来る権利\u003c/li>\u003cli>帯ポーチ＆名刺入れ\u003c/li>\u003c/ul>\u003cdiv class=\"ed-for\">\u003cspan class=\"ed-label\">THIS TICKET IS FOR YOU\u003c/span>\u003cp>美子とマンツーマンで\u003cbr>食事マナーと美しい所作を磨きたい方へ\u003c/p>\u003c/div>\u003c/div>","price":"PREMIUM VIP　100,000円・限定：2名様","css":".ed-details .general-photo-heading h2.vip-course-title{font-size:clamp(30px,4vw,56px);line-height:1.1;overflow-wrap:normal}.ticket-inclusion{font-size:14px;line-height:1.8;margin-top:8px}.ed-details li{line-height:1.8;overflow-wrap:anywhere}@media(max-width:720px){.ed-details .general-photo-heading h2.vip-course-title{font-size:clamp(25px,6.2vw,42px)}.completion-ticket-name{flex-wrap:wrap}.ed-details h3{font-size:clamp(18px,4.8vw,24px)}}\n\n.ed-ticket{flex-wrap:wrap;align-items:baseline;gap:8px 20px}\n.ticket-capacity{font:500 16px/1.6 var(--f-body);color:var(--red);white-space:nowrap;margin-top:8px}\n.ed-details>div,.general-photo-heading>div{min-width:0}\n.ed-details .general-photo-heading h2{font-size:clamp(34px,4vw,56px);line-height:1.12;overflow-wrap:normal}\n.ticket-title-word{display:inline-block;white-space:nowrap}\n.ed-details li{line-height:1.85;overflow-wrap:anywhere}\n.completion-ticket-name{flex-wrap:wrap}\n@media(max-width:720px){\n .ed-details{grid-template-columns:minmax(0,1fr);gap:30px}\n .general-photo-heading{grid-template-columns:minmax(0,1fr) clamp(88px,26vw,112px);gap:12px}\n .general-photo-heading>img{width:100%;height:auto}\n .ed-details .general-photo-heading h2{font-size:clamp(26px,6.6vw,42px);line-height:1.18}\n .ed-details .general-photo-heading .ed-price{font-size:clamp(26px,6.7vw,38px);white-space:nowrap}\n .ed-details h3{font-size:clamp(17px,4.5vw,22px);line-height:1.85;overflow-wrap:anywhere}\n .ed-details li,.ed-for p{font-size:clamp(16px,4.2vw,20px);line-height:1.9}\n .ed-details .ed-button{display:block;width:100%;text-align:center}\n .ticket-capacity{font-size:15px}\n}\n"}};
+ const select=document.getElementById('s-course');
+ const editorial=document.querySelector('.editorial');
+ const details=document.getElementById('ticket-details');
+ const ticket=editorial.querySelector('.ed-ticket');
+ const price=Array.from(editorial.querySelectorAll('.ed-info dl>div')).find(row=>row.querySelector('dt')?.textContent.trim()==='PRICE')?.querySelector('dd');
+ const style=document.getElementById('selected-course-style');
+ const formSection=document.getElementById('rsvp-page');
+ let activeCourse=Array.from(select.options).find(option=>option.defaultSelected)?.value || select.value;
+ editorial.dataset.course=activeCourse;
+ function updateCourse(){
+  const selected=courses[select.value];
+  if(!selected || activeCourse===select.value) return;
+  const formTop=formSection.getBoundingClientRect().top;
+  ticket.innerHTML=selected.ticket;
+  details.innerHTML=selected.details;
+  if(price)price.innerHTML=selected.price;
+  style.textContent=selected.css;
+  activeCourse=select.value;
+  editorial.dataset.course=activeCourse;
+  // Preserve the form's on-screen position when the preceding ticket section changes height.
+  const shift=formSection.getBoundingClientRect().top-formTop;
+  if(shift)window.scrollBy({top:shift,left:0,behavior:'instant'});
+ }
+ select.addEventListener('change',updateCourse);
+ window.addEventListener('pageshow',updateCourse);
+})();
+</script>
+
 <script>
 (function(){
  const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -3610,3 +3642,4 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
 </script>
 </body>
 </html>
+
