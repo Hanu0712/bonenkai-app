@@ -78,3 +78,10 @@ footer .footer-homepage:hover{color:#fff;text-decoration-color:currentColor}
 footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4px}
 @media(max-width:720px){footer{padding:36px 20px calc(40px + env(safe-area-inset-bottom))}footer .footer-brand{font-size:28px}footer .footer-tagline{margin-top:14px;font-size:16px}footer .footer-homepage{margin-top:10px;font-size:18px}}
 
+
+/* Updated benefits: retain the existing card design and separate each benefit. */
+.ticket-grid .ticket-limit{margin:0 0 16px;color:#786b65;font-size:14px}
+.ticket-grid .ticket-headline{margin:0 0 20px;font-size:17px;line-height:1.8;font-weight:500}
+.ticket-grid .ticket-benefits{list-style:none;padding:0;margin:0 0 24px;font-size:15px;line-height:1.85}
+.ticket-grid .ticket-benefits li{padding:10px 0;border-bottom:1px solid #eee4d7;overflow-wrap:anywhere}
+.ticket-grid .ticket-benefits li:first-child{padding-top:0}
