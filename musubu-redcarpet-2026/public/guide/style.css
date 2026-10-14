@@ -22,7 +22,7 @@ a:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
   h2,.intro h2,.venue h2,.early h2,.apply h2{font-size:clamp(24px,6.3vw,32px);line-height:1.5;letter-spacing:0;margin-bottom:24px}
   .kicker{font-size:11px;letter-spacing:.13em;line-height:1.9;margin-bottom:16px}
   .intro>.kicker{max-width:30em;margin-left:auto;margin-right:auto;letter-spacing:.05em}
-  .intro p:last-child{text-align:left;line-height:2}
+  .intro p:last-child{text-align:center;line-height:2}
   .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .cards div{padding:20px 16px;min-height:142px}
   .cards b{font-size:11px;margin-bottom:12px;letter-spacing:.1em}
@@ -119,3 +119,5 @@ footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4
 
 .early-copy-line{white-space:nowrap}
 @media(max-width:720px){.early p:not(.kicker):not(.note){font-size:clamp(12px,4vw,16px)}}
+
+.apply-instruction span{white-space:nowrap}
