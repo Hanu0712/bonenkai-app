@@ -121,3 +121,7 @@ footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4
 @media(max-width:720px){.early p:not(.kicker):not(.note){font-size:clamp(12px,4vw,16px)}}
 
 .apply-instruction span{white-space:nowrap}
+
+.venue-box{padding-left:16px;padding-right:16px}
+.venue-box strong{white-space:nowrap}
+@media(max-width:720px){.venue-box strong{font-size:clamp(12px,3.6vw,16px)}}
