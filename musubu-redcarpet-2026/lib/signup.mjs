@@ -43,6 +43,13 @@ export async function register(request, fetchService = fetch) {
   if (!record.name || !record.kana || !record.tel || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(record.email)) {
     return json({ ok: false, error: "必須項目を正しくご入力ください。" }, 400);
   }
+  // VIP lunch preference is collected only for the 30,000 yen VIP course.
+  if (record.tier === "VIP（30,000円）") {
+    if (!["東京開催", "名古屋開催", "どちらでも参加可能"].includes(value.lunchLocation)) {
+      return json({ ok: false, error: "ランチ開催場所の希望をお選びください。" }, 400);
+    }
+    record.lunchLocation = value.lunchLocation;
+  }
   try {
     const response = await fetchService(SIGNUP_URL, {
       method: "POST",
