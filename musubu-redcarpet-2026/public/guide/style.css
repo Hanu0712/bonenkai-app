@@ -112,3 +112,10 @@ footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4
 /* Preserve the user-approved complete line at phone widths. */
 .intro-pledge-line{white-space:nowrap}
 @media(max-width:720px){.intro-pledge-line{font-size:clamp(12px,4vw,16px)}}
+
+/* Match the approved introduction preview across system font metrics. */
+.intro-copy-line{white-space:nowrap}
+@media(max-width:720px){.intro p:last-child{font-size:clamp(12px,4vw,16px)}}
+
+.early-copy-line{white-space:nowrap}
+@media(max-width:720px){.early p:not(.kicker):not(.note){font-size:clamp(12px,4vw,16px)}}
