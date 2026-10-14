@@ -42,6 +42,11 @@ export async function register(request, fetchService = fetch) {
   if (!record.name || !record.kana || !record.tel || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(record.email)) {
     return json({ ok: false, error: "必須項目を正しくご入力ください。" }, 400);
   }
+  const expression = value.stageExpression == null ? "" : value.stageExpression;
+  if (typeof expression !== "string" || expression.length > 100 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(expression)) {
+    return json({ ok: false, error: "表現については100文字以内でご入力ください。" }, 400);
+  }
+  record.stageExpression = expression.trim();
   // VIP lunch preference is collected only for the 30,000 yen VIP course.
   if (record.tier === "VIP（30,000円）") {
     if (!["東京開催", "名古屋開催", "どちらでも参加可能"].includes(value.lunchLocation)) {

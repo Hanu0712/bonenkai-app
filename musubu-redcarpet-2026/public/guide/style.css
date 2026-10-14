@@ -85,3 +85,30 @@ footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4
 .ticket-grid .ticket-benefits{list-style:none;padding:0;margin:0 0 24px;font-size:15px;line-height:1.85}
 .ticket-grid .ticket-benefits li{padding:10px 0;border-bottom:1px solid #eee4d7;overflow-wrap:anywhere}
 .ticket-grid .ticket-benefits li:first-child{padding-top:0}
+
+/* Only date numerals change; the original heading face, weight and spacing remain. */
+@font-face{font-family:"MUSUBU Date Figures";src:url("assets/date-serif.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"MUSUBU Date Figures";src:url("assets/date-serif-bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+.event-date{white-space:nowrap}
+.date-figures{font-family:"MUSUBU Date Figures","Times New Roman",serif;font-weight:inherit;font-size:inherit;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+
+/* Keep desktop venue headings on intentional lines and the CTA compact. */
+@media(min-width:721px){
+ .venue h2{font-size:clamp(30px,3vw,42px)}
+ .apply .cta{display:inline-block;min-width:280px;text-align:center}
+ .apply .cta span{margin-left:18px}
+}
+@media(min-width:721px) and (max-width:1100px){.venue{grid-template-columns:minmax(0,1fr);gap:32px}}
+
+/* Keep phrases intact at the explicitly requested line breaks. */
+.copy-phrase{white-space:nowrap}
+@media(max-width:720px){
+ .cards div{padding-left:8px;padding-right:8px}
+ .cards span{font-size:clamp(13px,3.59vw,14px)}
+}
+
+
+
+/* Preserve the user-approved complete line at phone widths. */
+.intro-pledge-line{white-space:nowrap}
+@media(max-width:720px){.intro-pledge-line{font-size:clamp(12px,4vw,16px)}}
