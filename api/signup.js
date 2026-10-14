@@ -11,18 +11,28 @@ const FORM_ENTRIES = {
   insta: 'entry.78520541',
   tier: 'entry.2056991175',
   redCarpet: 'entry.1859529812',
+  lunchLocation: 'entry.1839797053',
 };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { name, kana, email, tel, insta, tier, redCarpet } = req.body || {};
+  const { name, kana, email, tel, insta, tier, redCarpet, lunchLocation } = req.body || {};
   if (!name || !kana || !email || !tel || !tier) {
     return res.status(400).json({ error: 'missing fields' });
   }
 
   if (redCarpet != null && !['歩きたい', '歩きたくない', '悩み中'].includes(redCarpet)) {
     return res.status(400).json({ error: 'invalid red-carpet preference' });
+  }
+  const lunchChoices = ['東京開催', '名古屋開催', 'どちらでも参加可能'];
+  if (tier === 'VIP（30,000円）' && !lunchChoices.includes(lunchLocation)) {
+    return res.status(400).json({ error: 'ランチ開催場所の希望をお選びください。' });
+  }
+  // Existing shared form: new spring lunch location preference.
+  const lunchFormEntry = FORM_ENTRIES.lunchLocation;
+  if (tier === 'VIP（30,000円）' && !/^entry\.\d+$/.test(lunchFormEntry || '')) {
+    return res.status(503).json({ error: 'ランチ希望の受付準備中です。主催者へお問い合わせください。' });
   }
   const rec = {
     tier: String(tier).slice(0, 50),
@@ -32,6 +42,7 @@ export default async function handler(req, res) {
     tel: String(tel).slice(0, 50),
     insta: String(insta || '').slice(0, 100),
     ...(redCarpet ? { redCarpet } : {}),
+    ...(tier === 'VIP（30,000円）' ? { lunchLocation } : {}),
     ts: Date.now(),
   };
 
@@ -52,6 +63,7 @@ export default async function handler(req, res) {
     if (rec.insta) params.set(FORM_ENTRIES.insta, rec.insta);
     params.set(FORM_ENTRIES.tier, rec.tier);
     if (rec.redCarpet) params.set(FORM_ENTRIES.redCarpet, rec.redCarpet);
+    if (rec.lunchLocation) params.set(lunchFormEntry, rec.lunchLocation);
     const r = await fetch(FORM_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -60,6 +72,10 @@ export default async function handler(req, res) {
     sheeted = r.ok;
   } catch (e) {
     console.error('sheet forward failed', e);
+  }
+
+  if (!sheeted) {
+    return res.status(502).json({ ok: false, uncertain: true, error: '受付結果を確認できませんでした。重複を防ぐため、再送せず主催者へお問い合わせください。' });
   }
 
   // 自動返信メール（RESEND_API_KEY が設定されたら有効になる）
