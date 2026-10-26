@@ -2792,7 +2792,16 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
 .expression-count{margin:7px 0 0;text-align:right;color:#786b65;font-size:13px;line-height:1.5}
 [data-confirm="stageExpression"]{white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
-</head>
+<style id="booking-availability-style">#s-course{width:100%;min-width:0;font-size:16px!important;padding-right:32px!important}
+.course-selection-meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin:12px 0 0;font-size:14px;line-height:1.8;color:#5f514a}
+.course-selection-meta span{white-space:nowrap}
+.vip-closed-notice{margin:0 0 24px;padding:18px 20px;border:1px solid #8d1024;background:#fff7f3;color:#8d1024;font-size:16px;line-height:1.9}
+.vip-closed-notice[hidden],.course-closed-stamp[hidden]{display:none!important}
+.ed-details.course-is-closed{position:relative}
+.ed-details.course-is-closed>div{opacity:.45}
+.course-closed-stamp{position:absolute;z-index:2;top:42%;left:50%;display:block;width:84%;max-width:340px;margin:0;padding:16px 8px;border:2px solid #fffaf2;outline:3px solid #8d1024;background:#8d1024;color:#fffaf2;box-shadow:0 7px 16px rgba(76,8,20,.24);font-family:inherit;font-size:clamp(32px,3vw,40px);font-weight:900;line-height:1.25;letter-spacing:.12em;text-align:center;white-space:nowrap;transform:translate(-50%,-50%) rotate(-14deg);pointer-events:none}
+@media(max-width:360px){#s-course{padding-left:12px!important;padding-right:24px!important}}
+</style></head>
 <body><div id="ed-intro-screen" aria-hidden="true"><img id="ed-intro-logo" fetchpriority="high" src="assets/lp-76eb4063ea7cb7.png" alt="Today Japan"></div><script>
 (function(){
  const screen=document.getElementById('ed-intro-screen');
@@ -2945,7 +2954,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
       <ol class="application-steps" aria-label="お申込みの流れ"><li data-step="application" aria-current="step"><span>01</span> 入力</li><li data-step="confirm"><span>02</span> 確認</li><li data-step="complete"><span>03</span> 完了</li></ol>
       <div id="application-heading" class="application-heading"><p class="application-eyebrow" id="application-eyebrow">APPLICATION</p><h2 class="application-title" id="application-screen-title" tabindex="-1">お申込み</h2><p class="application-event" id="application-screen-description">12月18日、レッドカーペットで。<br>ご参加コースとお客様情報をご入力ください。</p></div>
       <form class="signup" id="signup-form">
-        <div class="fld"><label class="field-label" for="s-course">参加コース<span class="req">必須</span></label><select class="field-input" id="s-course" required><option value="GENERAL（15,000円）">GENERAL｜15,000円</option><option value="VIP（30,000円）">VIP｜30,000円／限定：5名様</option><option value="SPECIAL VIP（50,000円）">SPECIAL VIP｜50,000円（限定：3名様）</option><option value="PREMIUM VIP（100,000円）" selected>PREMIUM VIP｜100,000円（限定：2名様）</option></select></div><div class="fld">
+        <div class="fld"><label class="field-label" for="s-course">参加コース<span class="req">必須</span></label><select class="field-input" id="s-course" required><option value="GENERAL（15,000円）">GENERAL｜15,000円</option><option value="VIP（30,000円）" disabled>VIP｜満員御礼</option><option value="SPECIAL VIP（50,000円）">SPECIAL VIP｜50,000円</option><option value="PREMIUM VIP（100,000円）" selected>PREMIUM VIP｜100,000円</option></select></div><div class="fld">
           <label class="field-label">お名前（漢字）<span class="req">必須</span></label>
           <div class="name-pair">
             <input class="field-input" id="s-sei" maxlength="48" required aria-label="名字" autocomplete="family-name" type="text" placeholder="名字（山田）">
@@ -3407,6 +3416,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
     if(!signupForm.reportValidity())return;
     const sei=field('s-sei'),mei=field('s-mei'),kanaSei=field('s-kana-sei'),kanaMei=field('s-kana-mei');
     const record={tier:courseInput.value,name:(sei+' '+mei).trim(),kana:(kanaSei+' '+kanaMei).trim(),email:field('s-email'),tel:['s-tel-first','s-tel-middle','s-tel-last'].map(field).join('-'),redCarpet:signupForm.querySelector('input[name="redCarpet"]:checked')?.value||'',stageExpression:field('s-expression'),insta:field('s-insta'),...(courseInput.value==='VIP（30,000円）'?{lunchLocation:signupForm.querySelector('input[name="lunchLocation"]:checked')?.value||''}:{})};
+    if(/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(record.tier)){signupError.textContent='VIPは満員御礼につき受付を終了しました。';return;}
     if(!record.tier){signupError.textContent='ご参加コースをお選びください';return;}
     if(!sei||!mei){signupError.textContent='お名前（名字と名前）をご入力ください';return;}
     if(!kanaSei||!kanaMei){signupError.textContent='よみがな（名字と名前）をご入力ください';return;}
@@ -3423,6 +3433,7 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
   });
   confirmButton.addEventListener('click',async()=>{
     if(!pendingRecord||submitting||registrationComplete||registrationUncertain)return;
+    if(/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(pendingRecord.tier)){confirmError.textContent='VIPは満員御礼につき受付を終了しました。';confirmButton.disabled=true;return;}
     submitting=true;confirmButton.disabled=true;confirmButton.textContent='送信中…';confirmError.textContent='';
     document.getElementById('edit-application').disabled=true;
     let result={ok:false,uncertain:true,error:'通信が途中で切れたため、受付結果を確認できませんでした。重複を防ぐため、再送せずご案内メールの到着をご確認ください。'};
@@ -3697,5 +3708,51 @@ body.application-preview-only #rsvp-page{padding-top:32px!important;min-height:1
  update();
 })();
 </script>
-</body>
+<script id="booking-availability">(()=>{
+ const select=document.getElementById('s-course');
+ if(!select)return;
+ const isClosed=value=>/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(String(value||'').trim());
+ const form=document.getElementById('signup-form');
+ const button=document.getElementById('application-submit');
+ const details=document.getElementById('ticket-details');
+ const meta=document.createElement('p');
+ meta.className='course-selection-meta';meta.id='course-selection-meta';meta.setAttribute('aria-live','polite');
+ select.insertAdjacentElement('afterend',meta);
+ select.setAttribute('aria-describedby','course-selection-meta');
+ const notice=document.createElement('p');
+ notice.id='vip-closed-notice';notice.className='vip-closed-notice';notice.setAttribute('role','status');
+ notice.textContent='VIPは満員御礼につき受付を終了しました。他のコースをお選びいただけます。';
+ form.insertAdjacentElement('beforebegin',notice);
+ const names={'GENERAL（15,000円）':['GENERAL','15,000円',''],'SPECIAL VIP（50,000円）':['SPECIAL VIP','50,000円','限定：3名様'],'PREMIUM VIP（100,000円）':['PREMIUM VIP','100,000円','限定：2名様']};
+ const originalLabels=new Map([...document.querySelectorAll('a[href="#rsvp-page"]')].map(a=>[a,a.textContent]));
+ function update(){
+  for(const option of select.options){
+   if(isClosed(option.value)){option.disabled=true;option.textContent='VIP｜満員御礼';}
+   else if(names[option.value])option.textContent=names[option.value].slice(0,2).join('｜');
+  }
+  const closed=isClosed(select.value);
+  notice.hidden=!closed;
+  button.disabled=closed;
+  button.textContent=closed?'VIPは満員御礼・他のコースをお選びください':'入力内容を確認する';
+  meta.replaceChildren();
+  for(const text of closed?['VIP','受付終了']:names[select.value]||[]){if(text){const span=document.createElement('span');span.textContent=text;meta.append(span);}}
+  if(details){
+   details.classList.toggle('course-is-closed',closed);
+   let stamp=details.querySelector('.course-closed-stamp');
+   if(closed&&!stamp){stamp=document.createElement('p');stamp.className='course-closed-stamp';stamp.textContent='満員御礼';stamp.setAttribute('role','status');details.append(stamp);}
+   if(stamp)stamp.hidden=!closed;
+  }
+  document.querySelectorAll('a[href="#rsvp-page"]').forEach(a=>{
+   if(!originalLabels.has(a))originalLabels.set(a,a.textContent);
+   a.textContent=closed?'VIPは満員御礼・他のコースを見る':originalLabels.get(a);
+  });
+ }
+ form.addEventListener('submit',event=>{
+  if(isClosed(select.value)){event.preventDefault();event.stopImmediatePropagation();update();notice.scrollIntoView({block:'center'});}
+ },true);
+ select.addEventListener('change',update);
+ window.addEventListener('pageshow',update);
+ update();
+})();
+</script></body>
 </html>
