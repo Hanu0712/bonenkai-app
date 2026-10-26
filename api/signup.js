@@ -19,6 +19,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
   const { name, kana, email, tel, insta, tier, redCarpet, lunchLocation, stageExpression } = req.body || {};
+  if (/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(String(tier || '').trim())) {
+    return res.status(409).json({ ok: false, error: 'VIPは満員御礼につき受付を終了しました。' });
+  }
   if (!name || !kana || !email || !tel || !tier) {
     return res.status(400).json({ error: 'missing fields' });
   }

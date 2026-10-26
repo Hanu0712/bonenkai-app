@@ -125,3 +125,8 @@ footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4
 .venue-box{padding-left:16px;padding-right:16px}
 .venue-box strong{white-space:nowrap}
 @media(max-width:720px){.venue-box strong{font-size:clamp(12px,3.6vw,16px)}}
+
+/* A diagonal sold-out stamp makes the closed VIP ticket immediately visible. */
+.ticket-grid .ticket-is-sold-out{position:relative}
+.ticket-is-sold-out h3,.ticket-is-sold-out .ticket-limit,.ticket-is-sold-out .ticket-benefits{opacity:.45}
+.ticket-grid .ticket-sold-out{position:absolute;z-index:2;top:44%;left:50%;display:block;width:92%;max-width:340px;margin:0;padding:16px 8px;border:2px solid var(--cream);outline:3px solid var(--red);background:var(--red);color:var(--cream);box-shadow:0 7px 16px rgba(76,8,20,.24);font-size:clamp(32px,3vw,40px);font-weight:900;line-height:1.25;letter-spacing:.12em;text-align:center;white-space:nowrap;transform:translate(-50%,-50%) rotate(-14deg);pointer-events:none}
