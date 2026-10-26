@@ -1,0 +1,132 @@
+:root{--red:#8d1024;--wine:#340e16;--green:#173c32;--gold:#c9a665;--cream:#fffaf2;--ink:#241c1d}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.8}h1,h2,h3,p{margin-top:0}h1,h2{font-family:Georgia,"Hiragino Mincho ProN",serif;line-height:1.25}h1{font-size:clamp(3rem,6vw,5.5rem);color:#fff;margin:.25rem 0 1rem}h1 em{color:#edc56d;font-style:normal}.hero{min-height:760px;background:var(--wine);display:grid;grid-template-columns:42% 58%;align-items:stretch;position:relative;overflow:hidden}.hero::after{content:"";grid-column:2;background:linear-gradient(90deg,var(--wine),rgba(52,14,22,.04) 20%),url('assets/hero.webp') center/cover no-repeat}.hero-copy{max-width:620px;color:#fff;align-self:center;padding:5rem 3rem 5rem 8vw;position:relative;z-index:1}.eyebrow,.kicker{letter-spacing:.16em;font-size:.75rem;font-weight:700;color:var(--gold)}.lead{font-size:clamp(1.2rem,2vw,1.6rem);margin-bottom:2rem}.cta{display:inline-flex;gap:1.2rem;align-items:center;background:var(--gold);color:#201315;text-decoration:none;padding:.9rem 1.5rem;border-radius:999px;font-weight:700}.cta span{font-size:1.4rem}.wrap{max-width:1100px;margin:auto;padding:100px 6vw}.intro{text-align:center}.intro h2,.venue h2,.early h2{font-size:clamp(2rem,4vw,3.4rem)}.intro p:last-child{max-width:700px;margin:auto}.experience{background:var(--green);color:#fff}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.cards div{border:1px solid rgba(255,255,255,.3);padding:1.3rem;min-height:150px}.cards b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.15em;margin-bottom:1rem}.cards span{display:block}.venue{display:grid;grid-template-columns:1.5fr 1fr;gap:4rem;align-items:center}.venue-box{background:var(--wine);color:#fff;padding:2.5rem;text-align:center;font-family:Georgia,serif;font-size:1.5rem}.venue-box strong{color:var(--gold);font-size:1rem}.tickets{background:#f0e7d8}.ticket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.ticket-grid article{background:#fff;padding:1.5rem;border-top:4px solid var(--red);display:flex;flex-direction:column}.ticket-grid small{color:var(--red);letter-spacing:.12em;font-weight:bold}.ticket-grid h3{font-size:2rem;margin:.4rem 0}.ticket-grid a{color:var(--red);font-weight:bold;text-decoration:none;margin-top:auto}.early{border-bottom:1px solid #dfd2bf}.early p:not(.kicker):not(.note){max-width:700px}.note,.tiny{font-size:.8rem;color:#786b65}.apply{background:var(--wine);color:#fff;text-align:center}.apply h2{font-size:clamp(2.3rem,5vw,4rem)}.light{background:#edc56d}.tiny{margin-top:1.5rem;color:#d6c6b7}footer{text-align:center;background:#1c1012;color:#fff;padding:2.5rem;font-family:Georgia,serif}footer span{font-family:inherit;font-size:.8rem;color:#c9a665}
+/* Responsive layout: preserve the desktop design and show the full artwork on phones. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:24px}
+.hero-visual{display:none}
+.hero-copy,.cards>div,.ticket-grid>article,.venue>div{min-width:0}
+.cta,.ticket-grid a{touch-action:manipulation}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+@media(min-width:721px) and (max-width:1100px){
+  .ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  body{font-size:16px;line-height:1.85;overflow-wrap:break-word}
+  .hero{min-height:0;display:flex;flex-direction:column;background:var(--wine)}
+  .hero::after{display:none}
+  .hero-visual{display:block;order:-1;width:100%;height:auto}
+  .hero-copy{width:100%;max-width:none;padding:32px 24px 40px;text-align:center;align-self:auto}
+  h1{font-size:clamp(27px,7.8vw,44px);line-height:1.35;margin:0 0 20px}
+  h1 em{white-space:nowrap}
+  .eyebrow{font-size:11px;letter-spacing:.14em;margin-bottom:14px}
+  .lead{font-size:clamp(16px,4.4vw,20px);line-height:1.85;margin-bottom:24px}
+  .wrap{width:100%;padding:56px 24px}
+  h2,.intro h2,.venue h2,.early h2,.apply h2{font-size:clamp(24px,6.3vw,32px);line-height:1.5;letter-spacing:0;margin-bottom:24px}
+  .kicker{font-size:11px;letter-spacing:.13em;line-height:1.9;margin-bottom:16px}
+  .intro>.kicker{max-width:30em;margin-left:auto;margin-right:auto;letter-spacing:.05em}
+  .intro p:last-child{text-align:center;line-height:2}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .cards div{padding:20px 16px;min-height:142px}
+  .cards b{font-size:11px;margin-bottom:12px;letter-spacing:.1em}
+  .cards span{font-size:14px;line-height:1.85}
+  .venue{grid-template-columns:minmax(0,1fr);gap:24px}
+  .venue p:last-child{margin-bottom:0}
+  .venue-box{padding:28px 16px;font-size:28px;line-height:1.8}
+  .venue-box strong{display:inline-block;font-size:clamp(14px,4vw,18px)}
+  .ticket-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  .ticket-grid article{padding:24px;border-top-width:3px}
+  .ticket-grid small{font-size:13px;line-height:1.6;letter-spacing:.12em}
+  .ticket-grid h3{font-size:34px;line-height:1.4;margin:12px 0 16px;font-variant-numeric:tabular-nums}
+  .ticket-grid p{font-size:15px;line-height:1.95;margin-bottom:24px}
+  .ticket-grid a{display:flex;align-items:center;justify-content:center;min-height:52px;padding:12px 10px;border:1px solid var(--red);font-size:15px;line-height:1.5;text-align:center}
+  .cta{justify-content:center;min-height:52px;width:100%;max-width:340px;padding:12px 20px;font-size:16px;line-height:1.5;gap:18px}
+  .early .note,.tiny{font-size:12px;line-height:1.9}
+  .apply p:not(.kicker){max-width:30em;margin-left:auto;margin-right:auto}
+  .apply .tiny{margin-top:24px;margin-bottom:0}
+  footer{padding:32px 20px calc(32px + env(safe-area-inset-bottom));font-size:20px}
+  footer span{display:inline-block;font-size:11px;line-height:1.8}
+}
+@media(max-width:359px){
+  .hero-copy{padding-left:20px;padding-right:20px}
+  .wrap{padding-left:20px;padding-right:20px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .cards div{min-height:0}
+  .ticket-grid article{padding:22px 20px}
+}
+
+/* Keep the full poster and readable heading on wider screens. */
+@media(min-width:721px){
+  .hero{min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:1600px;margin:auto;align-items:center}
+  .hero::after{display:none}
+  .hero-visual{display:block;grid-column:2;grid-row:1;width:100%;height:auto;max-height:980px;object-fit:contain}
+  .hero-copy{grid-column:1;grid-row:1;width:100%;max-width:none;padding:60px clamp(24px,4vw,70px)}
+  h1{font-size:clamp(36px,5vw,70px)}
+  h1 em{display:inline-block;font-size:clamp(27px,3.3vw,48px);white-space:nowrap}
+  .hero .lead{font-size:clamp(16px,1.6vw,23px)}
+}
+
+
+/* Scroll reveals match the four ticket pages; content remains visible without JavaScript. */
+.guide-reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease var(--reveal-delay,0ms),transform .7s cubic-bezier(.2,.65,.3,1) var(--reveal-delay,0ms)}
+.guide-reveal.is-visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.guide-reveal{opacity:1;transform:none;transition:none}}
+
+/* Today Japan footer and homepage link */
+footer{padding:48px 6vw 56px;line-height:1.5}
+footer .footer-brand{font-size:36px;line-height:1.4}
+footer .footer-tagline{margin:16px 0 0;color:#c9a665;font-family:inherit;font-size:18px;line-height:1.7}
+footer .footer-homepage{display:flex;align-items:center;justify-content:center;width:max-content;max-width:100%;min-height:44px;margin:12px auto 0;padding:4px 8px;color:#e7d4b2;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:20px;line-height:1.5;letter-spacing:.04em;text-decoration:underline;text-decoration-color:rgba(231,212,178,.55);text-underline-offset:5px;text-decoration-thickness:1px}
+footer .footer-homepage:hover{color:#fff;text-decoration-color:currentColor}
+footer .footer-homepage:focus-visible{outline:2px solid #edc56d;outline-offset:4px}
+@media(max-width:720px){footer{padding:36px 20px calc(40px + env(safe-area-inset-bottom))}footer .footer-brand{font-size:28px}footer .footer-tagline{margin-top:14px;font-size:16px}footer .footer-homepage{margin-top:10px;font-size:18px}}
+
+
+/* Updated benefits: retain the existing card design and separate each benefit. */
+.ticket-grid .ticket-limit{margin:0 0 16px;color:#786b65;font-size:14px}
+.ticket-grid .ticket-headline{margin:0 0 20px;font-size:17px;line-height:1.8;font-weight:500}
+.ticket-grid .ticket-benefits{list-style:none;padding:0;margin:0 0 24px;font-size:15px;line-height:1.85}
+.ticket-grid .ticket-benefits li{padding:10px 0;border-bottom:1px solid #eee4d7;overflow-wrap:anywhere}
+.ticket-grid .ticket-benefits li:first-child{padding-top:0}
+
+/* Only date numerals change; the original heading face, weight and spacing remain. */
+@font-face{font-family:"MUSUBU Date Figures";src:url("assets/date-serif.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"MUSUBU Date Figures";src:url("assets/date-serif-bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+.event-date{white-space:nowrap}
+.date-figures{font-family:"MUSUBU Date Figures","Times New Roman",serif;font-weight:inherit;font-size:inherit;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+
+/* Keep desktop venue headings on intentional lines and the CTA compact. */
+@media(min-width:721px){
+ .venue h2{font-size:clamp(30px,3vw,42px)}
+ .apply .cta{display:inline-block;min-width:280px;text-align:center}
+ .apply .cta span{margin-left:18px}
+}
+@media(min-width:721px) and (max-width:1100px){.venue{grid-template-columns:minmax(0,1fr);gap:32px}}
+
+/* Keep phrases intact at the explicitly requested line breaks. */
+.copy-phrase{white-space:nowrap}
+@media(max-width:720px){
+ .cards div{padding-left:8px;padding-right:8px}
+ .cards span{font-size:clamp(13px,3.59vw,14px)}
+}
+
+
+
+/* Preserve the user-approved complete line at phone widths. */
+.intro-pledge-line{white-space:nowrap}
+@media(max-width:720px){.intro-pledge-line{font-size:clamp(12px,4vw,16px)}}
+
+/* Match the approved introduction preview across system font metrics. */
+.intro-copy-line{white-space:nowrap}
+@media(max-width:720px){.intro p:last-child{font-size:clamp(12px,4vw,16px)}}
+
+.early-copy-line{white-space:nowrap}
+@media(max-width:720px){.early p:not(.kicker):not(.note){font-size:clamp(12px,4vw,16px)}}
+
+.apply-instruction span{white-space:nowrap}
+
+.venue-box{padding-left:16px;padding-right:16px}
+.venue-box strong{white-space:nowrap}
+@media(max-width:720px){.venue-box strong{font-size:clamp(12px,3.6vw,16px)}}
+
+/* A diagonal sold-out stamp makes the closed VIP ticket immediately visible. */
+.ticket-grid .ticket-is-sold-out{position:relative}
+.ticket-is-sold-out h3,.ticket-is-sold-out .ticket-limit,.ticket-is-sold-out .ticket-benefits{opacity:.45}
+.ticket-grid .ticket-sold-out{position:absolute;z-index:2;top:44%;left:50%;display:block;width:92%;max-width:340px;margin:0;padding:16px 8px;border:2px solid var(--cream);outline:3px solid var(--red);background:var(--red);color:var(--cream);box-shadow:0 7px 16px rgba(76,8,20,.24);font-size:clamp(32px,3vw,40px);font-weight:900;line-height:1.25;letter-spacing:.12em;text-align:center;white-space:nowrap;transform:translate(-50%,-50%) rotate(-14deg);pointer-events:none}

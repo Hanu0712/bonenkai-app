@@ -29,6 +29,7 @@ export async function register(request, fetchService = fetch) {
     return json({ ok: false, error: "入力内容を確認して、もう一度お試しください。" }, 400);
   }
   if (!value || typeof value !== "object" || Array.isArray(value)) return json({ ok: false, error: "入力内容をご確認ください。" }, 400);
+  if (/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(String(value.tier || '').trim())) return json({ ok: false, error: 'VIPは満員御礼につき受付を終了しました。' }, 409);
   const limits = { name: 100, kana: 100, email: 254, tel: 40, insta: 100, tier: 60, redCarpet: 10 };
   const record = {};
   for (const [key, max] of Object.entries(limits)) {
