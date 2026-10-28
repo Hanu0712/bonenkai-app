@@ -1,4 +1,4 @@
-// 申込を保存し、スプレッドシートに転送、自動返信メール（設定済みの場合）を送る
+// 申込を保存し、共通フォームへ転送。メールは既存のApps Scriptで送信する。
 import { put } from '@vercel/blob';
 
 // Googleフォーム受け口（スプレッドシート「望年会2026 申込者リスト」に直結）
@@ -19,8 +19,8 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
   const { name, kana, email, tel, insta, tier, redCarpet, lunchLocation, stageExpression } = req.body || {};
-  if (/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(String(tier || '').trim())) {
-    return res.status(409).json({ ok: false, error: 'VIPは満員御礼につき受付を終了しました。' });
+  if (/^VIP\s+(?:LUNCH|GIFT)(?:\s*[（(｜|]|$)/.test(String(tier || '').trim())) {
+    return res.status(409).json({ ok: false, error: 'このVIPコースの受付は終了しました。' });
   }
   if (!name || !kana || !email || !tel || !tier) {
     return res.status(400).json({ error: 'missing fields' });
@@ -92,42 +92,7 @@ export default async function handler(req, res) {
     return res.status(502).json({ ok: false, uncertain: true, error: '受付結果を確認できませんでした。重複を防ぐため、再送せず主催者へお問い合わせください。' });
   }
 
-  // 自動返信メール（RESEND_API_KEY が設定されたら有効になる）
-  let mailed = false;
-  if (process.env.RESEND_API_KEY) {
-    try {
-      const { Resend } = await import('resend');
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: process.env.MAIL_FROM || 'Today Japan <onboarding@resend.dev>',
-        to: rec.email,
-        subject: '【望年会】お申し込みありがとうございます｜当日ページのご案内',
-        text:
-`${rec.name} 様
-
-この度は「2026年 望年会」へお申し込みいただき、
-誠にありがとうございます。
-
-当日のご案内ページをご覧いただくための
-パスワードをお送りいたします。
-
-　パスワード：おむすび
-
-招待状の「次に進む」からパスワード入力画面にお進みください。
-　https://yoshiko2026.vercel.app
-
-2026年12月18日（金）、
-アニヴェルセル みなとみらい横浜にて
-お会いできますことを心より楽しみにしております。
-
-今日を生きる　日本は生きる
-Today Japan`,
-      });
-      mailed = true;
-    } catch (e) {
-      console.error('mail send failed', e);
-    }
-  }
-
-  return res.status(200).json({ ok: true, mailed, sheeted });
+  // 振込案内・入金お礼・催促は、共通シートの事務局メール自動処理に一本化。
+  // 旧Resend経路には廃止済み会場・パスワードの案内があり、重複送信を防ぐため使わない。
+  return res.status(200).json({ ok: true, mailed: false, sheeted });
 }
