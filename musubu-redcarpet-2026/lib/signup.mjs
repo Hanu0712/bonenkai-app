@@ -2,9 +2,9 @@
 const SIGNUP_URL = "https://yoshiko2026.vercel.app/api/signup";
 export const COURSES = Object.freeze({
   "GENERAL（15,000円）": 15000,
-  "VIP GIFT（30,000円）": 30000,
-  "VIP LUNCH（30,000円）": 30000,
+  "VIP（30,000円）": 30000,
   "SPECIAL VIP（50,000円）": 50000,
+  "PREMIUM VIP（100,000円）": 100000
 });
 
 function json(data, status = 200) {
@@ -29,8 +29,8 @@ export async function register(request, fetchService = fetch) {
     return json({ ok: false, error: "入力内容を確認して、もう一度お試しください。" }, 400);
   }
   if (!value || typeof value !== "object" || Array.isArray(value)) return json({ ok: false, error: "入力内容をご確認ください。" }, 400);
-  if (/^VIP(?:\s+(?:LUNCH|GIFT))?(?:\s*[（(｜|]|$)/.test(String(value.tier || '').trim())) return json({ ok: false, error: 'VIPは満員御礼につき受付を終了しました。' }, 409);
-  const limits = { name: 100, kana: 100, email: 254, tel: 40, insta: 100, tier: 60 };
+  if (/^VIP\s+(?:LUNCH|GIFT)(?:\s*[（(｜|]|$)/.test(String(value.tier || '').trim())) return json({ ok: false, error: 'このVIPコースの受付は終了しました。' }, 409);
+  const limits = { name: 100, kana: 100, email: 254, tel: 40, insta: 100, tier: 60, redCarpet: 10 };
   const record = {};
   for (const [key, max] of Object.entries(limits)) {
     if (value[key] == null && key === "insta") record[key] = "";
@@ -38,9 +38,22 @@ export async function register(request, fetchService = fetch) {
       return json({ ok: false, error: "入力内容をご確認ください。" }, 400);
     } else record[key] = value[key].trim();
   }
+  if (!["歩きたい", "歩きたくない", "悩み中"].includes(record.redCarpet)) return json({ ok: false, error: "レッドカーペットについてお選びください。" }, 400);
   if (!Object.hasOwn(COURSES, record.tier)) return json({ ok: false, error: "ご参加コースをお選びください。" }, 400);
   if (!record.name || !record.kana || !record.tel || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(record.email)) {
     return json({ ok: false, error: "必須項目を正しくご入力ください。" }, 400);
+  }
+  const expression = value.stageExpression == null ? "" : value.stageExpression;
+  if (typeof expression !== "string" || expression.length > 100 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(expression)) {
+    return json({ ok: false, error: "表現については100文字以内でご入力ください。" }, 400);
+  }
+  record.stageExpression = expression.trim();
+  // VIP lunch preference is collected only for the 30,000 yen VIP course.
+  if (record.tier === "VIP（30,000円）") {
+    if (!["東京開催", "名古屋開催", "どちらでも参加可能"].includes(value.lunchLocation)) {
+      return json({ ok: false, error: "ランチ開催場所の希望をお選びください。" }, 400);
+    }
+    record.lunchLocation = value.lunchLocation;
   }
   try {
     const response = await fetchService(SIGNUP_URL, {
