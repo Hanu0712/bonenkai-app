@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": null,
+  "buildCommand": "node remove-early-entry.cjs",
   "outputDirectory": "public",
   "functions": {
     "api/signup.js": {
